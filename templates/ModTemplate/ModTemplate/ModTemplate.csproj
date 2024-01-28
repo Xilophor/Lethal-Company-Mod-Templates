@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <AssemblyName>{ModGuid}</AssemblyName>
+        <Product>ModTemplate</Product>
+        <Description>{Description}</Description>
+        <Version>{Version}</Version>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all"/>
+<!--#if (PublicizeGameAssemblies) -->
+        <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.1" PrivateAssets="all"/>
+<!--#endif -->
+        <PackageReference Include="BepInEx.Core" Version="5.*" PrivateAssets="all"/>
+        <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" PrivateAssets="all"/>
+<!--#if (ReferenceGameLibsPackage) -->
+<!--#if (PublicizeGameAssemblies) -->
+        <PackageReference Include="LethalCompany.GameLibs.Steam" Version="*-*" Publicize="true" PrivateAssets="all"/>
+<!--#else -->
+        <PackageReference Include="LethalCompany.GameLibs.Steam" Version="*-*" PrivateAssets="all"/>
+<!--#endif -->
+<!--#endif -->
+        <PackageReference Include="UnityEngine.Modules" Version="2022.3.9" IncludeAssets="compile" PrivateAssets="all"/>
+    </ItemGroup>
+
+<!--/-:msbuild-conditional:noEmit -->
+    <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
+        <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all"/>
+    </ItemGroup>
+<!--/+:msbuild-conditional:noEmit -->
+
+<!--#if (HasNuGetPackage) -->
+    <ItemGroup>
+<!--#if (NuGetPackages == CSync) -->
+        <PackageReference Include="Owen3H.BepInEx.CSync" Version="*" PrivateAssets="all"/>
+<!--#endif -->
+<!--#if (NuGetPackages == LC-API) -->
+        <PackageReference Include="LethalCompany.LC-API" Version="*" PrivateAssets="all"/>
+<!--#endif -->
+<!--#if (NuGetPackages == LethalLib) -->
+        <PackageReference Include="Evaisa.LethalLib" Version="*" PrivateAssets="all"/>
+<!--#endif -->
+<!--#if (NuGetPackages == LethalNetworkAPI) -->
+        <PackageReference Include="Xilophor.LethalNetworkAPI" Version="*" PrivateAssets="all"/>
+<!--#endif -->
+<!--#if (NuGetPackages == TerminalAPI) -->
+        <PackageReference Include="NotAtomicBomb.TerminalAPI" Version="*" PrivateAssets="all"/>
+<!--#endif -->
+    </ItemGroup>
+<!--#endif -->
+</Project>

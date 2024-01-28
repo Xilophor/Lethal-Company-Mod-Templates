@@ -1,0 +1,81 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "Xilophor",
+    "classifications": [ "Lethal Company", "Mod", "BepInEx" ],
+    "identity": "Xilophor.LC.ModTemplate",
+    "name": "Lethal Company Mod Template",
+    "shortName": "lcmod",
+    "sourceName": "ModTemplate",
+    "tags": {
+        "language": "C#",
+        "type": "project"
+    },
+    "symbols": {
+        "ModGuid": {
+            "type": "parameter",
+            "description": "The global identifier specific to your mod. (Ex. username.ModName)",
+            "datatype": "text",
+            "isRequired": "true",
+            "replaces": "{ModGuid}"
+        },
+        "Description": {
+            "type": "parameter",
+            "description": "The description of your mod.",
+            "datatype": "text",
+            "defaultValue": "My mod description.",
+            "replaces": "{Description}"
+        },
+        "Version": {
+            "type": "parameter",
+            "description": "The initial version of your mod, in semantic versioning. (Ex. 1.0.0)",
+            "datatype": "text",
+            "defaultValue": "1.0.0",
+            "replaces": "{Version}"
+        },
+        "ReferenceGameLibsPackage": {
+            "type": "parameter",
+            "description": "Use the GameLibs NuGet Package to avoid manually referencing game files.",
+            "datatype": "bool",
+            "defaultValue": "true"
+        },
+        "PublicizeGameAssemblies": {
+            "type": "parameter",
+            "description": "Publicize the Game Assemblies to access internal or private classes, fields, methods, and properties.",
+            "datatype": "bool",
+            "defaultValue": "false"
+        },
+        "NuGetPackages": {
+            "type": "parameter",
+            "description": "Packages to reference for your mod. This will allow you to avoid manually referencing the assemblies if they have nuget packages.",
+            "datatype": "choice",
+            "enableQuotelessLiterals": true,
+            "allowMultipleValues": true,
+            "choices": [
+                {
+                    "choice": "CSync",
+                    "description": "Reference the CSync package."
+                },
+                {
+                    "choice": "LC-API",
+                    "description": "Reference the LC-API package."
+                },
+                {
+                    "choice": "LethalLib",
+                    "description": "Reference the Lethal Lib package."
+                },
+                {
+                    "choice": "LethalNetworkAPI",
+                    "description": "Reference the LethalNetworkAPI package."
+                },
+                {
+                    "choice": "TerminalAPI",
+                    "description": "Reference the TerminalAPI package."
+                }
+            ]
+        },
+        "HasNuGetPackage" : {
+            "type": "computed",
+            "value": "NuGetPackages == CSync || NuGetPackages == LC-API || NuGetPackages == LethalLib || NuGetPackages == LethalNetworkAPI || NuGetPackages == TerminalAPI"
+        }
+    }
+}

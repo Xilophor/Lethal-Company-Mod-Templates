@@ -1,0 +1,12 @@
+# Ignore All
+/*
+
+# Add Files
+!templates
+!.gitignore
+!README.md
+!UNLICENSE
+
+#Remove Files
+**/bin
+**/obj
