@@ -21,6 +21,8 @@ BepInEx uses [semantic versioning, or semvar](https://semver.org/), for the mod'
 </PropertyGroup>
 ```
 
+Your IDE will have the setting in `Package` or `NuGet` under `General` or `Metadata`, respectively.
+
 ## Logging
 
 A logger is provided to help with logging to the console. You can access it by doing `Plugin.Logger` in any class outside the `Plugin` class.

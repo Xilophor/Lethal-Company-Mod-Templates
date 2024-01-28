@@ -65,6 +65,9 @@
             "allowMultipleValues": true,
             "choices": [
                 {
+                    "choice": "none"
+                },
+                {
                     "choice": "CSync",
                     "description": "Reference the CSync package."
                 },
@@ -85,7 +88,7 @@
                     "description": "Reference the TerminalAPI package."
                 }
             ],
-            "defaultValue": ""
+            "defaultValue": "none"
         },
         "HasNuGetPackage" : {
             "type": "computed",
