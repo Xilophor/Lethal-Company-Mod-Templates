@@ -19,8 +19,7 @@ public class Plugin : BaseUnityPlugin
 
         Patch();
 
-        // Plugin startup logic
-        Logger.LogInfo($"{MyPluginInfo.PLUGIN_GUID} v{MyPluginInfo.PLUGIN_VERSION} is loaded!");
+        Logger.LogInfo($"{MyPluginInfo.PLUGIN_GUID} v{MyPluginInfo.PLUGIN_VERSION} has loaded!");
     }
 
     private void Patch()
@@ -30,5 +29,14 @@ public class Plugin : BaseUnityPlugin
         harmony.PatchAll();
 
         Logger.LogDebug("Finished Patching!");
+    }
+
+    private void Unpatch()
+    {
+        Logger.LogDebug("Unpatching...");
+
+        harmony.UnpatchSelf();
+
+        Logger.LogDebug("Finished Unpatching!");
     }
 }

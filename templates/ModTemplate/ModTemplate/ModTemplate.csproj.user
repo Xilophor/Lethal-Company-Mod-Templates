@@ -5,7 +5,11 @@
     </PropertyGroup>
 
     <!-- Copy to Plugin Directory for Quicker Testing -->
+<!--#if (UseNetcodePatcher) -->
+    <Target Name="CopyFiles" DependsOnTargets="NetcodePatch" AfterTargets="PostBuildEvent">
+<!--#else -->
     <Target Name="CopyFiles" AfterTargets="PostBuildEvent">
+<!--#end -->
         <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(PluginDirectory)"/>
     </Target>
 </Project>
