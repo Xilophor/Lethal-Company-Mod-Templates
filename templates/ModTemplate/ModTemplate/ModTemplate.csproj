@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+    <!-- Project Properties -->
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
         <AssemblyName>{ModGuid}</AssemblyName>
@@ -7,9 +8,22 @@
         <Description>{Description}</Description>
         <Version>{Version}</Version>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
     </PropertyGroup>
 
+<!--#if (PublicizeGameAssemblies) -->
+    <PropertyGroup>
+        <!-- Disable Publicizer Warnings -->
+        <NoWarn>$(NoWarn);CS0436</NoWarn>
+    </PropertyGroup>
+
+<!--#endif -->
+<!--#if (ReferenceGameLibsPackage) -->
+    <!-- Primary Package References - BepInEx and GameLibs -->
+<!--else -->
+    <!-- Primary Package References - BepInEx -->
+<!--#endif -->
     <ItemGroup>
         <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all"/>
 <!--#if (PublicizeGameAssemblies) -->
@@ -34,6 +48,7 @@
 <!--/+:msbuild-conditional:noEmit -->
 
 <!--#if (HasNuGetPackage) -->
+    <!-- Secondary Package References - Libraries and APIs -->
     <ItemGroup>
 <!--#if (NuGetPackages == CSync) -->
         <PackageReference Include="Owen3H.BepInEx.CSync" Version="*" PrivateAssets="all"/>

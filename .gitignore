@@ -6,6 +6,7 @@
 !.gitignore
 !README.md
 !UNLICENSE
+!.editorconfig
 
 #Remove Files
 **/bin
