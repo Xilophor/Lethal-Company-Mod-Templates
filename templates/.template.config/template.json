@@ -134,7 +134,6 @@
             "condition": "(UseNetcodePatcher == true) && (OS != \"Windows_NT\")",
             "args": {
                 "executable": "install-netcode-patcher.sh",
-                "args": "-c \"cd name\"",
                 "redirectStandardOutput": false,
                 "redirectStandardError": false
             },
