@@ -15,7 +15,7 @@
             "type": "parameter",
             "description": "The global identifier specific to your mod. (Ex. username.ModName)",
             "datatype": "text",
-            "isRequired": "true",
+            "isRequired": true,
             "replaces": "{ModGuid}"
         },
         "Description": {
@@ -32,6 +32,13 @@
             "defaultValue": "1.0.0",
             "replaces": "{Version}"
         },
+        "BepInExPluginLocation": {
+            "type": "parameter",
+            "description": "The file path of the plugin or profile directory to copy to for quick testing. If left blank, the mod will not be copied. Must include a trailing separator (/)",
+            "datatype": "text",
+            "replaces": "{PluginDirectory}",
+            "defaultValue": ""
+        },
         "ReferenceGameLibsPackage": {
             "type": "parameter",
             "description": "Use the GameLibs NuGet Package to avoid manually referencing game files.",
@@ -39,6 +46,12 @@
             "defaultValue": "true"
         },
         "PublicizeGameAssemblies": {
+            "type": "parameter",
+            "description": "Publicize the Game Assemblies to access internal or private classes, fields, methods, and properties.",
+            "datatype": "bool",
+            "defaultValue": "false"
+        },
+        "UseNetcodePatcher": {
             "type": "parameter",
             "description": "Publicize the Game Assemblies to access internal or private classes, fields, methods, and properties.",
             "datatype": "bool",
@@ -71,11 +84,67 @@
                     "choice": "TerminalAPI",
                     "description": "Reference the TerminalAPI package."
                 }
-            ]
+            ],
+            "defaultValue": ""
         },
         "HasNuGetPackage" : {
             "type": "computed",
             "value": "NuGetPackages == CSync || NuGetPackages == LC-API || NuGetPackages == LethalLib || NuGetPackages == LethalNetworkAPI || NuGetPackages == TerminalAPI"
         }
-    }
+    },
+    "sources": [
+        {
+            "modifiers": [
+                {
+                    "condition": "BepInExPluginLocation != \"\"",
+                    "include": [
+                        "**.user"
+                    ]
+                },
+                {
+                    "condition": "(OS != \"Windows_NT\")",
+                    "exclude": [
+                        "**.cmd"
+                    ]
+                },
+                {
+                    "condition": "(OS == \"Windows_NT\")",
+                    "exclude": [
+                        "**.sh"
+                    ]
+                }
+            ]
+        }
+    ],
+    "postActions": [
+        {
+            "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+            "condition": "(UseNetcodePatcher == true) && (OS != \"Windows_NT\")",
+            "args": {
+                "executable": "install-netcode-patcher.sh",
+                "args": "-c \"cd name\"",
+                "redirectStandardOutput": false,
+                "redirectStandardError": false
+            },
+            "manualInstructions": [{
+                "text": "Run 'install-netcode-patcher.sh'"
+            }],
+            "continueOnError": false,
+            "description ": "Setups Netcode Patcher by calling install-netcode-patcher.sh"
+        },
+        {
+            "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+            "condition": "(UseNetcodePatcher == true) && (OS == \"Windows_NT\")",
+            "args": {
+                "executable": "install-netcode-patcher.cmd",
+                "redirectStandardOutput": false,
+                "redirectStandardError": false
+            },
+            "manualInstructions": [{
+                "text": "Run 'install-netcode-patcher.cmd'"
+            }],
+            "continueOnError": false,
+            "description ": "Setups Netcode Patcher by calling install-netcode-patcher.cmd"
+        }
+    ]
 }

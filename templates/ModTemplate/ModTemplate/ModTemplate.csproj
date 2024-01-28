@@ -13,15 +13,21 @@
     </PropertyGroup>
 
 <!--#if (PublicizeGameAssemblies) -->
+    <!-- Disable Publicizer Warnings -->
     <PropertyGroup>
-        <!-- Disable Publicizer Warnings -->
         <NoWarn>$(NoWarn);CS0436</NoWarn>
     </PropertyGroup>
 
 <!--#endif -->
+    <!-- Embed Debug Symbols for Easier Debugging -->
+    <PropertyGroup>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
 <!--#if (ReferenceGameLibsPackage) -->
     <!-- Primary Package References - BepInEx and GameLibs -->
-<!--else -->
+<!--#else -->
     <!-- Primary Package References - BepInEx -->
 <!--#endif -->
     <ItemGroup>
@@ -66,5 +72,11 @@
         <PackageReference Include="NotAtomicBomb.TerminalAPI" Version="*" PrivateAssets="all"/>
 <!--#endif -->
     </ItemGroup>
+<!--#endif -->
+
+<!--#if (UseNetcodePatcher) -->
+    <Target Name="NetcodePatch" AfterTargets="PostBuildEvent">
+        <Exec Command="netcode-patch &quot;$(TargetPath)&quot; @(ReferencePathWithRefAssemblies->'&quot;%(Identity)&quot;', ' ')"/>
+    </Target>
 <!--#endif -->
 </Project>
