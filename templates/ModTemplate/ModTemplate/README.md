@@ -25,7 +25,8 @@ BepInEx uses [semantic versioning, or semvar](https://semver.org/), for the mod'
 
 A logger is provided to help with logging to the console. You can access it by doing `Plugin.Logger` in any class outside the `Plugin` class.
 
-***Please use `LogDebug()` whenever possible, as any other log method will be displayed to the console and potentially cause performance issues for users.***
+***Please use*** `LogDebug()` ***whenever possible, as any other log method will be displayed to the console and potentially cause performance issues for users.***
+
 If you chose to do so, make sure you change the following line in the `BepInEx.cfg` file to see the Debug messages:
 
 ```toml
