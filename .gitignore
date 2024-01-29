@@ -2,11 +2,13 @@
 /*
 
 # Add Files
-!templates
 !.gitignore
 !README.md
 !UNLICENSE
 !.editorconfig
+!.github
+!content
+!Xilophor.LCModTemplates.csproj
 
 #Remove Files
 **/bin
