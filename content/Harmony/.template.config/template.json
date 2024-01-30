@@ -1,0 +1,165 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "Xilophor",
+    "classifications": [ "Lethal Company", "Mod", "BepInEx" ],
+    "identity": "Xilophor.LC.ModTemplate",
+    "name": "Lethal Company Harmony Mod Template",
+    "shortName": "lchmod, lcmod, lcharmony",
+    "sourceName": "ModTemplate",
+    "tags": {
+        "language": "C#",
+        "type": "project"
+    },
+    "preferNameDirectory": true,
+    "symbols": {
+        "ModGuid": {
+            "type": "parameter",
+            "description": "The global identifier specific to your mod. (Ex. username.ModName)",
+            "datatype": "text",
+            "isRequired": true,
+            "replaces": "{ModGuid}"
+        },
+        "Description": {
+            "type": "parameter",
+            "description": "The description of your mod.",
+            "datatype": "text",
+            "defaultValue": "My mod description.",
+            "replaces": "{Description}"
+        },
+        "Version": {
+            "type": "parameter",
+            "description": "The initial version of your mod, in semantic versioning. (Ex. 1.0.0)",
+            "datatype": "text",
+            "defaultValue": "1.0.0",
+            "replaces": "{Version}"
+        },
+        "BepInExPluginLocation": {
+            "type": "parameter",
+            "description": "The file path of the plugin or profile directory to copy to for quick testing. If left blank, the mod will not be copied. Must include a trailing separator (/)",
+            "datatype": "text",
+            "replaces": "{PluginDirectory}",
+            "defaultValue": ""
+        },
+        "ReferenceGameLibsPackage": {
+            "type": "parameter",
+            "description": "Use the GameLibs NuGet Package to avoid manually referencing game files.",
+            "datatype": "bool",
+            "defaultValue": "true"
+        },
+        "PublicizeGameAssemblies": {
+            "type": "parameter",
+            "description": "Publicize the Game Assemblies to access internal or private classes, fields, methods, and properties.",
+            "datatype": "bool",
+            "defaultValue": "false"
+        },
+        "UseNetcodePatcher": {
+            "type": "parameter",
+            "description": "Publicize the Game Assemblies to access internal or private classes, fields, methods, and properties.",
+            "datatype": "bool",
+            "defaultValue": "false"
+        },
+        "NuGetPackages": {
+            "type": "parameter",
+            "description": "Packages to reference for your mod. This will allow you to avoid manually referencing the assemblies if they have nuget packages.",
+            "datatype": "choice",
+            "enableQuotelessLiterals": true,
+            "allowMultipleValues": true,
+            "choices": [
+                {
+                    "choice": "none"
+                },
+                {
+                    "choice": "CSync",
+                    "description": "Reference the CSync package."
+                },
+                {
+                    "choice": "LC-API",
+                    "description": "Reference the LC-API package."
+                },
+                {
+                    "choice": "LethalLib",
+                    "description": "Reference the Lethal Lib package."
+                },
+                {
+                    "choice": "LethalNetworkAPI",
+                    "description": "Reference the LethalNetworkAPI package."
+                },
+                {
+                    "choice": "TerminalAPI",
+                    "description": "Reference the TerminalAPI package."
+                }
+            ],
+            "defaultValue": "none"
+        },
+        "HasNuGetPackage" : {
+            "type": "computed",
+            "value": "NuGetPackages == CSync || NuGetPackages == LC-API || NuGetPackages == LethalLib || NuGetPackages == LethalNetworkAPI || NuGetPackages == TerminalAPI"
+        }
+    },
+    "sources": [
+        {
+            "modifiers": [
+                {
+                    "condition": "BepInExPluginLocation != \"\"",
+                    "include": [
+                        "**.user"
+                    ]
+                },
+                {
+                    "condition": "(OS != \"Windows_NT\")",
+                    "exclude": [
+                        "**.cmd"
+                    ]
+                },
+                {
+                    "condition": "(OS == \"Windows_NT\")",
+                    "exclude": [
+                        "**.sh"
+                    ]
+                }
+            ]
+        }
+    ],
+    "postActions": [
+        {
+            "condition": "(OS != \"Windows_NT\")",
+            "description": "Make scripts executable",
+            "manualInstructions": [{
+              "text": "Run 'chmod +x *.sh'"
+            }],
+            "actionId": "cb9a6cf3-4f5c-4860-b9d2-03a574959774",
+            "args": {
+                "+x": "*.sh"
+            },
+            "continueOnError": true
+        },
+        {
+            "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+            "condition": "(UseNetcodePatcher == true) && (OS != \"Windows_NT\")",
+            "args": {
+                "executable": "install-netcode-patcher.sh",
+                "redirectStandardOutput": false,
+                "redirectStandardError": false
+            },
+            "manualInstructions": [{
+                "text": "Run 'install-netcode-patcher.sh'"
+            }],
+            "continueOnError": false,
+            "description ": "Setups Netcode Patcher by calling install-netcode-patcher.sh"
+        },
+        {
+            "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+            "condition": "(UseNetcodePatcher == true) && (OS == \"Windows_NT\")",
+            "args": {
+                "executable": "install-netcode-patcher.cmd",
+                "redirectStandardOutput": false,
+                "redirectStandardError": false
+            },
+            "manualInstructions": [{
+                "text": "Run 'install-netcode-patcher.cmd'"
+            }],
+            "continueOnError": false,
+            "description ": "Setups Netcode Patcher by calling install-netcode-patcher.cmd"
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+<Project>
+    <!-- Custom Variables -->
+    <PropertyGroup>
+        <PluginDirectory>../Lethal Company/BepInEx/plugins/</PluginDirectory>
+    </PropertyGroup>
+
+    <!-- Copy to Plugin Directory for Quicker Testing -->
+<!--#if (UseNetcodePatcher) -->
+    <Target Name="CopyFiles" DependsOnTargets="NetcodePatch" AfterTargets="PostBuildEvent">
+<!--#else -->
+    <Target Name="CopyFiles" AfterTargets="PostBuildEvent">
+<!--#endif -->
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(PluginDirectory)" />
+    </Target>
+</Project>

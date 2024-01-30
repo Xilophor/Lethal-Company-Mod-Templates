@@ -1,15 +1,16 @@
 {
     "$schema": "http://json.schemastore.org/template",
     "author": "Xilophor",
-    "classifications": [ "Lethal Company", "Mod", "BepInEx" ],
-    "identity": "Xilophor.LC.ModTemplate",
-    "name": "Lethal Company Mod Template",
-    "shortName": "lcmod",
+    "classifications": [ "Lethal Company", "Mod", "BepInEx", "Monomod" ],
+    "identity": "Xilophor.LC.MonoModTemplate",
+    "name": "Lethal Company Monomod Mod Template",
+    "shortName": "lcmmod, lcmonomod",
     "sourceName": "ModTemplate",
     "tags": {
         "language": "C#",
         "type": "project"
     },
+    "preferNameDirectory": true,
     "symbols": {
         "ModGuid": {
             "type": "parameter",
@@ -17,6 +18,13 @@
             "datatype": "text",
             "isRequired": true,
             "replaces": "{ModGuid}"
+        },
+        "MMHOOKLocation": {
+            "type": "parameter",
+            "description": "The file path of the MMHOOK folder. This is typically located in your (profile) plugin folder. Must include a trailing separator (/)",
+            "datatype": "text",
+            "isRequired": true,
+            "replaces": "{MMHOOKDir}"
         },
         "Description": {
             "type": "parameter",
@@ -97,13 +105,11 @@
     },
     "sources": [
         {
+            "include": [
+                "**/*",
+                "**.user"
+            ],
             "modifiers": [
-                {
-                    "condition": "BepInExPluginLocation != \"\"",
-                    "include": [
-                        "**.user"
-                    ]
-                },
                 {
                     "condition": "(OS != \"Windows_NT\")",
                     "exclude": [
