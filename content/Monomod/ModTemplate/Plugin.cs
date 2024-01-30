@@ -28,10 +28,15 @@ public class Plugin : BaseUnityPlugin
 
         /*
          *  Subscribe with 'On.Class.Method += CustomClass.CustomMethod;' for each method you're patching
+
          *  or add to the list for each method you're patching with:
          *
          *  Hooks.Add(
-         *      new Hook(typeof(Class).GetMethod(Class.Method), CustomClass.CustomMethod);
+#if (PublicizeGameAssemblies)
+         *      new Hook(typeof(Class).GetMethod(nameof(Class.Method)), CustomClass.CustomMethod);
+#else
+         *      new Hook(typeof(Class).GetMethod("Method"), CustomClass.CustomMethod);
+#end
          */
 
         Logger.LogDebug("Finished Hooking!");

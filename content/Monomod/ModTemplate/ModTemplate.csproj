@@ -6,7 +6,9 @@
         <AssemblyName>{ModGuid}</AssemblyName>
         <Product>ModTemplate</Product>
         <Description>{Description}</Description>
+        <!-- Change to whatever version you're currently on. -->
         <Version>{Version}</Version>
+        <!---->
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
@@ -82,6 +84,7 @@
     </ItemGroup>
 
 <!--#if (UseNetcodePatcher) -->
+    <!-- Netcode Patcher Post-Build Event -->
     <Target Name="NetcodePatch" AfterTargets="PostBuildEvent">
         <Exec Command="netcode-patch &quot;$(TargetPath)&quot; @(ReferencePathWithRefAssemblies->'&quot;%(Identity)&quot;', ' ')"/>
     </Target>

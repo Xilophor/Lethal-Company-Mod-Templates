@@ -4,7 +4,7 @@ Thank you for using the mod template! Here are a few tips to help you on your jo
 
 ## Versioning
 
-BepInEx uses [semantic versioning, or semvar](https://semver.org/), for the mod's version info. To increment it, you can either modify the version tag in the `.csproj` file directly, or use your IDE's UX to increment the version. Below is an example of modifying the `.csproj` file directly:
+BepInEx uses [semantic versioning, or semver](https://semver.org/), for the mod's version info. To increment it, you can either modify the version tag in the `.csproj` file directly, or use your IDE's UX to increment the version. Below is an example of modifying the `.csproj` file directly:
 
 ```xml
 <PropertyGroup>
