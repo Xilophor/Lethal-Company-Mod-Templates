@@ -16,3 +16,6 @@ indent_size = 4
 
 [*.cs]
 indent_size = 4
+
+[*.json]
+indent_size = 4

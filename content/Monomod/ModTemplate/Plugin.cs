@@ -9,7 +9,7 @@ public class Plugin : BaseUnityPlugin
     public static Plugin Instance { get; private set; }
     internal static new ManualLogSource Logger { get; private set; }
 
-    // If you use the method of hooking showing in the README, add to this list; otherwise ignore or remove this list.
+    // If you use the method of hooking shown in the README, add to this list; otherwise ignore or remove this list.
     internal static readonly List<IDetour> Hooks { get; } = new List<IDetour>();
 
     private void Awake()

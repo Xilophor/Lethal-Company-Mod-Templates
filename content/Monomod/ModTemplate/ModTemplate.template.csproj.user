@@ -4,7 +4,7 @@
 <!--#if (BepInExPluginLocation != "") -->
         <CopyToDirectory>../Lethal Company/BepInEx/plugins/</CopyToDirectory>
 <!--#endif -->
-        <MMHOOKDirectory>{MMHOOKDir}</MMHOOKDirectory>
+        <MMHOOKDirectory>../Lethal Comapny/BepInEx/plugins/MMHOOK/</MMHOOKDirectory>
     </PropertyGroup>
 
     <!-- Copy to Plugin Directory for Quicker Testing -->

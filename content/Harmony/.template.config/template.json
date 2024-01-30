@@ -4,7 +4,7 @@
     "classifications": [ "Lethal Company", "Mod", "BepInEx" ],
     "identity": "Xilophor.LC.ModTemplate",
     "name": "Lethal Company Harmony Mod Template",
-    "shortName": "lchmod, lcmod, lcharmony",
+    "shortName": [ "lchmod", "lcharmony" ],
     "sourceName": "ModTemplate",
     "tags": {
         "language": "C#",
