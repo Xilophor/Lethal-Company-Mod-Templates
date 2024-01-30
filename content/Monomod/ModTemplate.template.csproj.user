@@ -14,7 +14,7 @@
 <!--#else -->
     <Target Name="CopyFiles" AfterTargets="PostBuildEvent">
 <!--#endif -->
-        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(CopyToDirectory)" />
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(CopyToDirectory)"/>
     </Target>
 <!--#endif -->
 </Project>

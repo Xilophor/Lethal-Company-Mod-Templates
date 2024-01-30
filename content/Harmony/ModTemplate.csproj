@@ -54,10 +54,13 @@
         <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all"/>
     </ItemGroup>
 <!--/+:msbuild-conditional:noEmit -->
-
 <!--#if (HasNuGetPackage) -->
+
     <!-- Secondary Package References - Libraries and APIs -->
     <ItemGroup>
+<!--#if (NuGetPackages = ConfigurableCompany -->
+        <PackageReference Include="Amrv.ConfigurableCompany" Version="*" PrivateAssets="all"/>
+<!--#endif -->
 <!--#if (NuGetPackages == CSync) -->
         <PackageReference Include="Owen3H.BepInEx.CSync" Version="*" PrivateAssets="all"/>
 <!--#endif -->
@@ -75,15 +78,8 @@
 <!--#endif -->
     </ItemGroup>
 <!--#endif -->
-
-    <!-- Package References - Game Assemblies -->
-    <ItemGroup>
-        <Reference Include="MMHOOK_Assembly-CSharp">
-            <HintPath>$(MMHOOKDirectory)MMHOOK_Assembly-CSharp.dll</HintPath>
-        </Reference>
-    </ItemGroup>
-
 <!--#if (UseNetcodePatcher) -->
+
     <!-- Netcode Patcher Post-Build Event -->
     <Target Name="NetcodePatch" AfterTargets="PostBuildEvent">
         <Exec Command="netcode-patch &quot;$(TargetPath)&quot; @(ReferencePathWithRefAssemblies->'&quot;%(Identity)&quot;', ' ')"/>

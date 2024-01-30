@@ -69,6 +69,10 @@
                     "choice": "none"
                 },
                 {
+                    "choice": "ConfigurableCompany",
+                    "description": "Reference the ConfigurableCompany package."
+                },
+                {
                     "choice": "CSync",
                     "description": "Reference the CSync package."
                 },
@@ -93,11 +97,21 @@
         },
         "HasNuGetPackage" : {
             "type": "computed",
-            "value": "NuGetPackages == CSync || NuGetPackages == LC-API || NuGetPackages == LethalLib || NuGetPackages == LethalNetworkAPI || NuGetPackages == TerminalAPI"
+            "value": "NuGetPackages == ConfigurableCompany || NuGetPackages == CSync || NuGetPackages == LC-API || NuGetPackages == LethalLib || NuGetPackages == LethalNetworkAPI || NuGetPackages == TerminalAPI"
         }
     },
     "sources": [
         {
+            "exclude": [
+                "**/[Bb]in/**",
+                "**/[Oo]bj/**",
+                ".template.config/**/*",
+                "**/*.filelist",
+                "**/*.user",
+                "**/*.lock.json",
+                "**/*.cmd",
+                "**/*.sh"
+            ],
             "modifiers": [
                 {
                     "condition": "BepInExPluginLocation != \"\"",
@@ -106,14 +120,14 @@
                     ]
                 },
                 {
-                    "condition": "(OS != \"Windows_NT\")",
-                    "exclude": [
+                    "condition": "(UseNetcodePatcher) && (OS == \"Windows_NT\")",
+                    "include": [
                         "**.cmd"
                     ]
                 },
                 {
-                    "condition": "(OS == \"Windows_NT\")",
-                    "exclude": [
+                    "condition": "(UseNetcodePatcher) && (OS != \"Windows_NT\")",
+                    "include": [
                         "**.sh"
                     ]
                 }
@@ -135,7 +149,7 @@
         },
         {
             "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
-            "condition": "(UseNetcodePatcher == true) && (OS != \"Windows_NT\")",
+            "condition": "(UseNetcodePatcher) && (OS != \"Windows_NT\")",
             "args": {
                 "executable": "install-netcode-patcher.sh",
                 "redirectStandardOutput": false,
@@ -149,7 +163,7 @@
         },
         {
             "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
-            "condition": "(UseNetcodePatcher == true) && (OS == \"Windows_NT\")",
+            "condition": "(UseNetcodePatcher) && (OS == \"Windows_NT\")",
             "args": {
                 "executable": "install-netcode-patcher.cmd",
                 "redirectStandardOutput": false,

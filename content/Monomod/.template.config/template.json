@@ -109,16 +109,25 @@
                 "**/*",
                 "**.user"
             ],
+            "exclude": [
+                "**/[Bb]in/**",
+                "**/[Oo]bj/**",
+                ".template.config/**/*",
+                "**/*.filelist",
+                "**/*.lock.json",
+                "**/*.cmd",
+                "**/*.sh"
+            ],
             "modifiers": [
                 {
-                    "condition": "(OS != \"Windows_NT\")",
-                    "exclude": [
+                    "condition": "(OS == \"Windows_NT\")",
+                    "include": [
                         "**.cmd"
                     ]
                 },
                 {
-                    "condition": "(OS == \"Windows_NT\")",
-                    "exclude": [
+                    "condition": "(OS != \"Windows_NT\")",
+                    "include": [
                         "**.sh"
                     ]
                 }

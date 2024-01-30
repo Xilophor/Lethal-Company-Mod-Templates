@@ -53,7 +53,7 @@ This template uses harmony. For more specifics on how to use it, look at
 To make a new harmony patch, just use `[HarmonyPatch]` before any class you make that has a patch in it.
 
 Then in that class, you can use
-//#if (PublicizeGameAssemblies == true)
+//#if (PublicizeGameAssemblies)
 `[HarmonyPatch(typeof(ClassToPatch), nameof(ClassToPatch.MethodToPatch))]`
 //#else
 `[HarmonyPatch(typeof(ClassToPatch), "MethodToPatch")]`
@@ -78,7 +78,7 @@ namespace CustomMod.Patches;
 [HarmonyPatch(typeof(PlayerControllerB))]
 internal class PlayerControllerBPatches
 {
-//#if (PublicizeGameAssemblies == true)
+//#if (PublicizeGameAssemblies)
     [HarmonyPatch(nameof(PlayerControllerB.Update))]
 //#else
     [HarmonyPatch("MethodToPatch")]
