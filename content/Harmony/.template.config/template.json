@@ -77,10 +77,6 @@
                     "description": "Reference the CSync package."
                 },
                 {
-                    "choice": "LC-API",
-                    "description": "Reference the LC-API package."
-                },
-                {
                     "choice": "LethalLib",
                     "description": "Reference the Lethal Lib package."
                 },
@@ -97,7 +93,7 @@
         },
         "HasNuGetPackage" : {
             "type": "computed",
-            "value": "NuGetPackages == ConfigurableCompany || NuGetPackages == CSync || NuGetPackages == LC-API || NuGetPackages == LethalLib || NuGetPackages == LethalNetworkAPI || NuGetPackages == TerminalAPI"
+            "value": "NuGetPackages == ConfigurableCompany || NuGetPackages == CSync || NuGetPackages == LethalLib || NuGetPackages == LethalNetworkAPI || NuGetPackages == TerminalAPI"
         }
     },
     "sources": [

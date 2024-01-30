@@ -58,11 +58,11 @@
 
     <!-- Secondary Package References - Libraries and APIs -->
     <ItemGroup>
+<!--#if (NuGetPackages = ConfigurableCompany -->
+        <PackageReference Include="Amrv.ConfigurableCompany" Version="*" PrivateAssets="all"/>
+<!--#endif -->
 <!--#if (NuGetPackages == CSync) -->
         <PackageReference Include="Owen3H.BepInEx.CSync" Version="*" PrivateAssets="all"/>
-<!--#endif -->
-<!--#if (NuGetPackages == LC-API) -->
-        <PackageReference Include="LethalCompany.LC-API" Version="*" PrivateAssets="all"/>
 <!--#endif -->
 <!--#if (NuGetPackages == LethalLib) -->
         <PackageReference Include="Evaisa.LethalLib" Version="*" PrivateAssets="all"/>

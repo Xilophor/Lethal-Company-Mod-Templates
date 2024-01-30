@@ -64,9 +64,6 @@
 <!--#if (NuGetPackages == CSync) -->
         <PackageReference Include="Owen3H.BepInEx.CSync" Version="*" PrivateAssets="all"/>
 <!--#endif -->
-<!--#if (NuGetPackages == LC-API) -->
-        <PackageReference Include="LethalCompany.LC-API" Version="*" PrivateAssets="all"/>
-<!--#endif -->
 <!--#if (NuGetPackages == LethalLib) -->
         <PackageReference Include="Evaisa.LethalLib" Version="*" PrivateAssets="all"/>
 <!--#endif -->
