@@ -5,7 +5,7 @@
     "identity": "Xilophor.LC.MonoModTemplate",
     "name": "Lethal Company Monomod Mod Template",
     "shortName": [ "lcmmod", "lcmonomod" ],
-    "sourceName": "ModTemplate",
+    "sourceName": "MonoMod.ModTemplate",
     "tags": {
         "language": "C#",
         "type": "project"
