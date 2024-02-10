@@ -6,16 +6,34 @@ using System;
 using System.Reflection;
 #endif
 
-namespace ModTemplate;
+namespace MonoMod._ModTemplate;
 
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
-public class Plugin : BaseUnityPlugin
+#if (NuGetPackages = ConfigurableCompany)
+[BepInDependency(LethalConfiguration.PLUGIN_GUID, BepInDependency.DependencyFlags.HardDependency)]
+#endif
+#if (NuGetPackages == CSync)
+[BepInDependency("io.github.CSync", BepInDependency.DependencyFlags.HardDependency)]
+#endif
+#if (NuGetPackages == LethalLib)
+[BepInDependency("evaisa.lethallib", BepInDependency.DependencyFlags.HardDependency)]
+#endif
+#if (NuGetPackages == LethalNetworkAPI)
+[BepInDependency("LethalNetworkAPI", BepInDependency.DependencyFlags.HardDependency)]
+#endif
+#if (NuGetPackages == LethalSettings)
+[BepInDependency("com.willis.lc.lethalsettings", BepInDependency.DependencyFlags.HardDependency)]
+#endif
+#if (NuGetPackages == TerminalAPI)
+[BepInDependency("atomic.terminalapi", BepInDependency.DependencyFlags.HardDependency)]
+#endif
+public class MonoMod__ModTemplate : BaseUnityPlugin
 {
     public static Plugin Instance { get; private set; } = null!;
-    internal static new ManualLogSource Logger { get; private set; } = null!;
+    internal new static ManualLogSource Logger { get; private set; } = null!;
 
     // If you use the method of hooking shown in the README, add to this list; otherwise ignore or remove this list.
-    internal static readonly List<IDetour> Hooks { get; } = new List<IDetour>();
+    internal static readonly List<IDetour> Hooks { get; set; } = new List<IDetour>();
 
     private void Awake()
     {
@@ -36,7 +54,6 @@ public class Plugin : BaseUnityPlugin
 
         /*
          *  Subscribe with 'On.Class.Method += CustomClass.CustomMethod;' for each method you're patching
-
          *  or add to the list for each method you're patching with:
          *
          *  Hooks.Add(
@@ -60,8 +77,7 @@ public class Plugin : BaseUnityPlugin
          *
          *  foreach (var detour in Hooks)
          *      detour.Undo();
-         *
-         * Hooks.Clear();
+         *  Hooks.Clear();
          */
 
         Logger.LogDebug("Finished Unhooking!");
