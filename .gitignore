@@ -4,7 +4,7 @@
 # Add Files
 !.gitignore
 !README.md
-!UNLICENSE
+!LICENSE
 !.editorconfig
 !.github
 !content
