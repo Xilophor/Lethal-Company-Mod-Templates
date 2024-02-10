@@ -1,7 +1,7 @@
 <Project>
     <!-- Custom Variables -->
     <PropertyGroup>
-        <PluginDirectory>../Lethal Company/BepInEx/plugins/</PluginDirectory>
+        <PluginDirectory>.../Lethal Company/BepInEx/plugins/</PluginDirectory>
     </PropertyGroup>
 
     <!-- Copy to Plugin Directory for Quicker Testing -->

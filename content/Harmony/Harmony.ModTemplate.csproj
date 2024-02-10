@@ -1,17 +1,32 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+    <!-- BepInEx Properties -->
+    <PropertyGroup>
+        <AssemblyName>{ModGuid}</AssemblyName>
+        <Product>Harmony.ModTemplate</Product>
+        <!-- Change to whatever version you're currently on. -->
+        <Version>{Version}</Version>
+    </PropertyGroup>
+
     <!-- Project Properties -->
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
-        <AssemblyName>{ModGuid}</AssemblyName>
-        <Product>ModTemplate</Product>
-        <Description>{Description}</Description>
-        <!-- Change to whatever version you're currently on. -->
-        <Version>{Version}</Version>
-        <!---->
+        <RootNamespace>Harmomy._ModTemplate</RootNamespace>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+
+    <!-- Set NuGet Sources -->
+    <PropertyGroup>
+        <RestoreAdditionalProjectSources>
+            https://api.nuget.org/v3/index.json;
+            https://nuget.bepinex.dev/v3/index.json
+        </RestoreAdditionalProjectSources>
+    </PropertyGroup>
+
+    <!-- Enable Nullable for better IDE null-checking -->
+    <PropertyGroup>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
 <!--#if (PublicizeGameAssemblies) -->
@@ -25,6 +40,11 @@
     <PropertyGroup>
         <DebugSymbols>true</DebugSymbols>
         <DebugType>embedded</DebugType>
+        <!--
+        Trim the project path to prevent players from potentially
+        viewing Private Information in stack traces.
+        -->
+        <PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))=./</PathMap>
     </PropertyGroup>
 
 <!--#if (ReferenceGameLibsPackage) -->
@@ -59,19 +79,22 @@
     <!-- Secondary Package References - Libraries and APIs -->
     <ItemGroup>
 <!--#if (NuGetPackages = ConfigurableCompany -->
-        <PackageReference Include="Amrv.ConfigurableCompany" Version="*" PrivateAssets="all"/>
+        <PackageReference Include="Amrv.ConfigurableCompany" Version="2.*" PrivateAssets="all"/>
 <!--#endif -->
 <!--#if (NuGetPackages == CSync) -->
-        <PackageReference Include="Owen3H.BepInEx.CSync" Version="*" PrivateAssets="all"/>
+        <PackageReference Include="Owen3H.BepInEx.CSync" Version="1.*" PrivateAssets="all"/>
 <!--#endif -->
 <!--#if (NuGetPackages == LethalLib) -->
-        <PackageReference Include="Evaisa.LethalLib" Version="*" PrivateAssets="all"/>
+        <PackageReference Include="Evaisa.LethalLib" Version="0.*" PrivateAssets="all"/>
 <!--#endif -->
 <!--#if (NuGetPackages == LethalNetworkAPI) -->
-        <PackageReference Include="Xilophor.LethalNetworkAPI" Version="*" PrivateAssets="all"/>
+        <PackageReference Include="Xilophor.LethalNetworkAPI" Version="2.*" PrivateAssets="all"/>
+<!--#endif -->
+<!--#if (NuGetPackages == LethalSettings) -->
+        <PackageReference Include="LethalSettings" Version="1.*" PrivateAssets="all"/>
 <!--#endif -->
 <!--#if (NuGetPackages == TerminalAPI) -->
-        <PackageReference Include="NotAtomicBomb.TerminalAPI" Version="*" PrivateAssets="all"/>
+        <PackageReference Include="NotAtomicBomb.TerminalAPI" Version="1.*" PrivateAssets="all"/>
 <!--#endif -->
     </ItemGroup>
 <!--#endif -->

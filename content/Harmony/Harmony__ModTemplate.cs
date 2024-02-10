@@ -6,13 +6,13 @@ using System;
 using System.Reflection;
 #endif
 
-namespace ModTemplate;
+namespace Harmomy._ModTemplate;
 
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
-public class Plugin : BaseUnityPlugin
+public class Harmony__ModTemplate : BaseUnityPlugin
 {
     public static Plugin Instance { get; private set; } = null!;
-    internal static new ManualLogSource Logger { get; private set; } = null!;
+    internal new static ManualLogSource Logger { get; private set; } = null!;
     private static Harmony harmony = null!;
 
     private void Awake()

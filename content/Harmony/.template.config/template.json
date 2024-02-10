@@ -5,7 +5,7 @@
     "identity": "Xilophor.LC.ModTemplate",
     "name": "Lethal Company Harmony Mod Template",
     "shortName": [ "lchmod", "lcharmony" ],
-    "sourceName": "ModTemplate",
+    "sourceName": "Harmony.ModTemplate",
     "tags": {
         "language": "C#",
         "type": "project"
@@ -15,16 +15,16 @@
         "ModGuid": {
             "type": "parameter",
             "description": "The global identifier specific to your mod. (Ex. username.ModName)",
-            "datatype": "text",
-            "isRequired": true,
-            "replaces": "{ModGuid}"
+            "datatype": "text"
         },
-        "Description": {
-            "type": "parameter",
-            "description": "The description of your mod.",
-            "datatype": "text",
-            "defaultValue": "My mod description.",
-            "replaces": "{Description}"
+        "ModGuidReplacer": {
+            "type": "generated",
+            "generator": "coalesce",
+            "parameters": {
+                "sourceVariableName": "ModGuid",
+                "fallbackVariableName": "name"
+            },
+            "replaces": "{ModGuid}"
         },
         "Version": {
             "type": "parameter",
@@ -37,8 +37,7 @@
             "type": "parameter",
             "description": "The file path of the plugin or profile directory to copy to for quick testing. If left blank, the mod will not be copied. Must include a trailing separator (/)",
             "datatype": "text",
-            "replaces": "{PluginDirectory}",
-            "defaultValue": ""
+            "replaces": "{PluginDirectory}"
         },
         "ReferenceGameLibsPackage": {
             "type": "parameter",
@@ -54,13 +53,13 @@
         },
         "UseNetcodePatcher": {
             "type": "parameter",
-            "description": "Publicize the Game Assemblies to access internal or private classes, fields, methods, and properties.",
+            "description": "Publicize the Game Assemblies to access internal or private classes, fields, methods, and properties. If using Visual Studio, you must run the cmd/sh file yourself to finish installation.",
             "datatype": "bool",
             "defaultValue": "false"
         },
         "NuGetPackages": {
             "type": "parameter",
-            "description": "Packages to reference for your mod. This will allow you to avoid manually referencing the assemblies if they have nuget packages.",
+            "description": "CURRENTLY DOES NOT WORK WITH VISUAL STUDIO. Packages to reference for your mod. This will allow you to avoid manually referencing the assemblies if they have nuget packages.",
             "datatype": "choice",
             "enableQuotelessLiterals": true,
             "allowMultipleValues": true,
@@ -85,6 +84,10 @@
                     "description": "Reference the LethalNetworkAPI package."
                 },
                 {
+                    "choice": "LethalSettings",
+                    "description": "Reference the LethalNetworkAPI package."
+                },
+                {
                     "choice": "TerminalAPI",
                     "description": "Reference the TerminalAPI package."
                 }
@@ -93,7 +96,7 @@
         },
         "HasNuGetPackage" : {
             "type": "computed",
-            "value": "NuGetPackages == ConfigurableCompany || NuGetPackages == CSync || NuGetPackages == LethalLib || NuGetPackages == LethalNetworkAPI || NuGetPackages == TerminalAPI"
+            "value": "NuGetPackages == ConfigurableCompany || NuGetPackages == CSync || NuGetPackages == LethalLib || NuGetPackages == LethalNetworkAPI || NuGetPackages == LethalSettings || NuGetPackages == TerminalAPI"
         }
     },
     "sources": [
@@ -110,20 +113,26 @@
             ],
             "modifiers": [
                 {
-                    "condition": "BepInExPluginLocation != \"\"",
+                    "condition": "defined( BepInExPluginLocation )",
                     "include": [
                         "**.user"
                     ]
                 },
                 {
-                    "condition": "(UseNetcodePatcher) && (OS == \"Windows_NT\")",
+                    "condition": "UseNetcodePatcher",
                     "include": [
+                        "install-netcode-patcher.*"
+                    ]
+                },
+                {
+                    "condition": "OS != \"Windows_NT\"",
+                    "exclude": [
                         "**.cmd"
                     ]
                 },
                 {
-                    "condition": "(UseNetcodePatcher) && (OS != \"Windows_NT\")",
-                    "include": [
+                    "condition": "OS == \"Windows_NT\"",
+                    "exclude": [
                         "**.sh"
                     ]
                 }
@@ -132,7 +141,7 @@
     ],
     "postActions": [
         {
-            "condition": "(OS != \"Windows_NT\")",
+            "condition": "(OS != \"Windows_NT\") && (UseNetcodePatcher || UseThunderstoreCLI)",
             "description": "Make scripts executable",
             "manualInstructions": [{
               "text": "Run 'chmod +x *.sh'"
@@ -170,6 +179,16 @@
             }],
             "continueOnError": false,
             "description ": "Setups Netcode Patcher by calling install-netcode-patcher.cmd"
+        },
+        {
+            "description": "Add projects to solution",
+            "manualInstructions": [ { "text": "Add generated project to solution manually." } ],
+            "args": {
+                "solutionFolder": "src",
+                "projectFiles": [ "Harmony.ModTemplate.csproj" ]
+            },
+            "actionId": "D396686C-DE0E-4DE6-906D-291CD29FC5DE",
+            "continueOnError": true
         }
     ]
 }

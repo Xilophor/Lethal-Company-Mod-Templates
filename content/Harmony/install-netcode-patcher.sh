@@ -2,5 +2,5 @@
 cd ../
 dotnet new tool-manifest
 dotnet tool install --local evaisa.netcodepatcher.cli
-cd ModTemplate
+cd Harmony.ModTemplate || exit
 rm install-netcode-patcher.sh
