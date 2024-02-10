@@ -17,14 +17,32 @@
             "description": "The global identifier specific to your mod. (Ex. username.ModName)",
             "datatype": "text"
         },
-        "ModGuidReplacer": {
+        "ModGuidGen": {
             "type": "generated",
             "generator": "coalesce",
             "parameters": {
                 "sourceVariableName": "ModGuid",
                 "fallbackVariableName": "name"
-            },
+            }
+        },
+        "ModGuidReplacer": {
+            "type": "derived",
+            "valueSource": "ModGuidGen",
+            "valueTransform": "guid",
             "replaces": "{ModGuid}"
+        },
+        "NamespaceReplacer": {
+            "type": "derived",
+            "valueSource": "name",
+            "valueTransform": "namespace",
+            "replaces": "MonoMod._ModTemplate"
+        },
+        "ClassnameReplacer": {
+            "type": "derived",
+            "valueSource": "name",
+            "valueTransform": "classname",
+            "replaces": "MonoMod__ModTemplate",
+            "fileRename": "MonoMod__ModTemplate"
         },
         "MMHOOKLocation": {
             "type": "parameter",
@@ -204,7 +222,7 @@
             "manualInstructions": [ { "text": "Add generated project to solution manually." } ],
             "args": {
                 "solutionFolder": "src",
-                "projectFiles": [ "Harmony.ModTemplate.csproj" ]
+                "projectFiles": [ "MonoMod.ModTemplate.csproj" ]
             },
             "actionId": "D396686C-DE0E-4DE6-906D-291CD29FC5DE",
             "continueOnError": true

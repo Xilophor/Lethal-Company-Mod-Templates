@@ -11,20 +11,51 @@
         "type": "project"
     },
     "preferNameDirectory": true,
+    "forms": {
+        "namespace": {
+            "identifier": "safe_namespace"
+        },
+        "classname": {
+            "identifier": "safe_name"
+        },
+        "guid": {
+            "identifier": "replace",
+            "pattern": "[^a-zA-Z0-9\\._\\-]+",
+            "replacement": ""
+        }
+    },
     "symbols": {
         "ModGuid": {
             "type": "parameter",
             "description": "The global identifier specific to your mod. (Ex. username.ModName)",
             "datatype": "text"
         },
-        "ModGuidReplacer": {
+        "ModGuidGen": {
             "type": "generated",
             "generator": "coalesce",
             "parameters": {
                 "sourceVariableName": "ModGuid",
                 "fallbackVariableName": "name"
-            },
+            }
+        },
+        "ModGuidReplacer": {
+            "type": "derived",
+            "valueSource": "ModGuidGen",
+            "valueTransform": "guid",
             "replaces": "{ModGuid}"
+        },
+        "NamespaceReplacer": {
+            "type": "derived",
+            "valueSource": "name",
+            "valueTransform": "namespace",
+            "replaces": "Harmony._ModTemplate"
+        },
+        "ClassnameReplacer": {
+            "type": "derived",
+            "valueSource": "name",
+            "valueTransform": "classname",
+            "replaces": "Harmony__ModTemplate",
+            "fileRename": "Harmony__ModTemplate"
         },
         "Version": {
             "type": "parameter",
