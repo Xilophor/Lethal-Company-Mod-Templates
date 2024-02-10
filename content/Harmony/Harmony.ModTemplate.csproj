@@ -4,8 +4,13 @@
     <PropertyGroup>
         <AssemblyName>{ModGuid}</AssemblyName>
         <Product>Harmony.ModTemplate</Product>
+<!--#if (!UseMinVer) -->
         <!-- Change to whatever version you're currently on. -->
         <Version>{Version}</Version>
+<!--#else -->
+        <MinVerDefaultPreReleaseIdentifiers>dev</MinVerDefaultPreReleaseIdentifiers>
+        <MinVerTagPrefix>v</MinVerTagPrefix>
+<!--#endif -->
     </PropertyGroup>
 
     <!-- Project Properties -->
@@ -16,17 +21,17 @@
         <LangVersion>latest</LangVersion>
     </PropertyGroup>
 
+    <!-- Enable Nullable for better IDE null-checking -->
+    <PropertyGroup>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
     <!-- Set NuGet Sources -->
     <PropertyGroup>
         <RestoreAdditionalProjectSources>
             https://api.nuget.org/v3/index.json;
             https://nuget.bepinex.dev/v3/index.json
         </RestoreAdditionalProjectSources>
-    </PropertyGroup>
-
-    <!-- Enable Nullable for better IDE null-checking -->
-    <PropertyGroup>
-        <Nullable>enable</Nullable>
     </PropertyGroup>
 
 <!--#if (PublicizeGameAssemblies) -->
@@ -47,11 +52,7 @@
         <PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))=./</PathMap>
     </PropertyGroup>
 
-<!--#if (ReferenceGameLibsPackage) -->
-    <!-- Primary Package References - BepInEx and GameLibs -->
-<!--#else -->
-    <!-- Primary Package References - BepInEx -->
-<!--#endif -->
+    <!-- Primary Package References -->
     <ItemGroup>
         <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all"/>
 <!--#if (PublicizeGameAssemblies) -->
@@ -67,6 +68,9 @@
 <!--#endif -->
 <!--#endif -->
         <PackageReference Include="UnityEngine.Modules" Version="2022.3.9" IncludeAssets="compile" PrivateAssets="all"/>
+<!--#if (UseMinVer) -->
+        <PackageReference Include="MinVer" Version="4.*" PrivateAssets="all"/>
+<!--#endif -->
     </ItemGroup>
 
 <!--/-:msbuild-conditional:noEmit -->

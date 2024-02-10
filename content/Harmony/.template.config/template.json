@@ -30,6 +30,7 @@
             "type": "parameter",
             "description": "The initial version of your mod, in semantic versioning. (Ex. 1.0.0)",
             "datatype": "text",
+            "isEnabled": "!UseMinVer",
             "defaultValue": "1.0.0",
             "replaces": "{Version}"
         },
@@ -48,6 +49,12 @@
         "PublicizeGameAssemblies": {
             "type": "parameter",
             "description": "Publicize the Game Assemblies to access internal or private classes, fields, methods, and properties.",
+            "datatype": "bool",
+            "defaultValue": "false"
+        },
+        "UseMinVer": {
+            "type": "parameter",
+            "description": "Instead of manually changing the mod version, use MinVer and automatically update the mod version based off of git tags (ie 'v1.2.3'). Only enable if you are using git vsc (ie GitHub).",
             "datatype": "bool",
             "defaultValue": "false"
         },
