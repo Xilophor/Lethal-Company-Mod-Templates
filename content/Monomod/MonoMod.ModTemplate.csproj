@@ -1,19 +1,54 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+    <!-- BepInEx Properties -->
+    <PropertyGroup>
+        <AssemblyName>{ModGuid}</AssemblyName>
+        <Product>{Product}</Product>
+<!--#if (!UseMinVer) -->
+        <!-- Change to whatever version you're currently on. -->
+        <Version>{Version}</Version>
+<!--#endif -->
+    </PropertyGroup>
+<!--#if (UseMinVer) -->
+
+    <!-- Set Mod Version with MinVer -->
+    <Target Name="SetModVersion" BeforeTargets="AddGeneratedFile" DependsOnTargets="MinVer">
+        <PropertyGroup>
+            <PlainVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)</PlainVersion>
+            <BepInExPluginVersion>$(PlainVersion)</BepInExPluginVersion>
+        </PropertyGroup>
+    </Target>
+<!--#endif -->
+
     <!-- Project Properties -->
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
-        <AssemblyName>{ModGuid}</AssemblyName>
-        <Product>ModTemplate</Product>
-        <Description>{Description}</Description>
-        <!-- Change to whatever version you're currently on. -->
-        <Version>{Version}</Version>
-        <!---->
+        <RootNamespace>MonoMod._ModTemplate</RootNamespace>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
     </PropertyGroup>
 
+    <!-- Enable Nullable for better IDE null-checking -->
+    <PropertyGroup>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <!-- Set NuGet Sources -->
+    <PropertyGroup>
+        <RestoreAdditionalProjectSources>
+            https://api.nuget.org/v3/index.json;
+            https://nuget.bepinex.dev/v3/index.json
+        </RestoreAdditionalProjectSources>
+    </PropertyGroup>
+
+<!--#if (UseMinVer) -->
+    <!-- Set MinVer Tag & Prerelease Properties -->
+    <PropertyGroup>
+        <MinVerDefaultPreReleaseIdentifiers>dev</MinVerDefaultPreReleaseIdentifiers>
+        <MinVerTagPrefix>v</MinVerTagPrefix>
+    </PropertyGroup>
+
+<!--#endif -->
 <!--#if (PublicizeGameAssemblies) -->
     <!-- Disable Publicizer Warnings -->
     <PropertyGroup>
@@ -25,13 +60,14 @@
     <PropertyGroup>
         <DebugSymbols>true</DebugSymbols>
         <DebugType>embedded</DebugType>
+        <!--
+        Trim the project path to prevent players from potentially
+        viewing Private Information in stack traces.
+        -->
+        <PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))=./</PathMap>
     </PropertyGroup>
 
-<!--#if (ReferenceGameLibsPackage) -->
-    <!-- Primary Package References - BepInEx and GameLibs -->
-<!--#else -->
     <!-- Primary Package References - BepInEx -->
-<!--#endif -->
     <ItemGroup>
         <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all"/>
 <!--#if (PublicizeGameAssemblies) -->
@@ -39,14 +75,15 @@
 <!--#endif -->
         <PackageReference Include="BepInEx.Core" Version="5.*" PrivateAssets="all"/>
         <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" PrivateAssets="all"/>
-<!--#if (ReferenceGameLibsPackage) -->
-<!--#if (PublicizeGameAssemblies) -->
+<!--#if (ReferenceGameLibsPackage && PublicizeGameAssemblies) -->
         <PackageReference Include="LethalCompany.GameLibs.Steam" Version="*-*" Publicize="true" PrivateAssets="all"/>
-<!--#else -->
+<!--#elseif (ReferenceGameLibsPackage) -->
         <PackageReference Include="LethalCompany.GameLibs.Steam" Version="*-*" PrivateAssets="all"/>
 <!--#endif -->
+<!--#if (UseMinVer) -->
+        <PackageReference Include="MinVer" Version="4.*" PrivateAssets="all"/>
 <!--#endif -->
-        <PackageReference Include="UnityEngine.Modules" Version="2022.3.9" IncludeAssets="compile" PrivateAssets="all"/>
+        <PackageReference Include="UnityEngine.Modules" Version="2022.3.9" PrivateAssets="all"/>
     </ItemGroup>
 
 <!--/-:msbuild-conditional:noEmit -->
@@ -69,6 +106,9 @@
 <!--#endif -->
 <!--#if (NuGetPackages == LethalNetworkAPI) -->
         <PackageReference Include="Xilophor.LethalNetworkAPI" Version="*" PrivateAssets="all"/>
+<!--#endif -->
+<!--#if (NuGetPackages == LethalSettings) -->
+        <PackageReference Include="LethalSettings" Version="1.*" PrivateAssets="all"/>
 <!--#endif -->
 <!--#if (NuGetPackages == TerminalAPI) -->
         <PackageReference Include="NotAtomicBomb.TerminalAPI" Version="*" PrivateAssets="all"/>

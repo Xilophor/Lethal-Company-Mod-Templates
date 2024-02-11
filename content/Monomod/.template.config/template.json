@@ -5,19 +5,66 @@
     "identity": "Xilophor.LC.MonoModTemplate",
     "name": "Lethal Company Monomod Mod Template",
     "shortName": [ "lcmmod", "lcmonomod" ],
-    "sourceName": "ModTemplate",
+    "sourceName": "MonoMod.ModTemplate",
     "tags": {
         "language": "C#",
         "type": "project"
     },
     "preferNameDirectory": true,
+    "forms": {
+        "namespace": {
+            "identifier": "safe_namespace"
+        },
+        "classname": {
+            "identifier": "safe_name"
+        },
+        "guid": {
+            "identifier": "replace",
+            "pattern": "[^a-zA-Z0-9\\._\\-]+",
+            "replacement": ""
+        },
+        "identity": {
+            "identifier": "identity"
+        }
+    },
     "symbols": {
         "ModGuid": {
             "type": "parameter",
             "description": "The global identifier specific to your mod. (Ex. username.ModName)",
-            "datatype": "text",
-            "isRequired": true,
+            "datatype": "text"
+        },
+        "ModGuidGen": {
+            "type": "generated",
+            "generator": "coalesce",
+            "parameters": {
+                "sourceVariableName": "ModGuid",
+                "fallbackVariableName": "name"
+            }
+        },
+        "ModGuidReplacer": {
+            "type": "derived",
+            "valueSource": "ModGuidGen",
+            "valueTransform": "guid",
             "replaces": "{ModGuid}"
+        },
+        "NamespaceReplacer": {
+            "type": "derived",
+            "valueSource": "name",
+            "valueTransform": "namespace",
+            "replaces": "MonoMod._ModTemplate"
+        },
+        "ClassnameReplacer": {
+            "type": "derived",
+            "valueSource": "name",
+            "valueTransform": "classname",
+            "replaces": "MonoMod__ModTemplate",
+            "fileRename": "MonoMod__ModTemplate"
+        },
+        "IdentityReplacer": {
+            "type": "derived",
+            "valueSource": "name",
+            "valueTransform": "identity",
+            "replaces": "{Product}"
         },
         "MMHOOKLocation": {
             "type": "parameter",
@@ -26,17 +73,11 @@
             "isRequired": true,
             "replaces": "{MMHOOKDir}"
         },
-        "Description": {
-            "type": "parameter",
-            "description": "The description of your mod.",
-            "datatype": "text",
-            "defaultValue": "My mod description.",
-            "replaces": "{Description}"
-        },
         "Version": {
             "type": "parameter",
             "description": "The initial version of your mod, in semantic versioning. (Ex. 1.0.0)",
             "datatype": "text",
+            "isEnabled": "!UseMinVer",
             "defaultValue": "1.0.0",
             "replaces": "{Version}"
         },
@@ -59,6 +100,12 @@
             "datatype": "bool",
             "defaultValue": "false"
         },
+        "UseMinVer": {
+            "type": "parameter",
+            "description": "Instead of manually changing the mod version, use MinVer and automatically update the mod version based off of git tags (ie 'v1.2.3'). Only enable if you are using git vsc (ie GitHub).",
+            "datatype": "bool",
+            "defaultValue": "false"
+        },
         "UseNetcodePatcher": {
             "type": "parameter",
             "description": "Publicize the Game Assemblies to access internal or private classes, fields, methods, and properties.",
@@ -67,7 +114,7 @@
         },
         "NuGetPackages": {
             "type": "parameter",
-            "description": "Packages to reference for your mod. This will allow you to avoid manually referencing the assemblies if they have nuget packages.",
+            "description": "CURRENTLY DOES NOT WORK WITH VISUAL STUDIO. Packages to reference for your mod. This will allow you to avoid manually referencing the assemblies if they have nuget packages.",
             "datatype": "choice",
             "enableQuotelessLiterals": true,
             "allowMultipleValues": true,
@@ -92,6 +139,10 @@
                     "description": "Reference the LethalNetworkAPI package."
                 },
                 {
+                    "choice": "LethalSettings",
+                    "description": "Reference the LethalNetworkAPI package."
+                },
+                {
                     "choice": "TerminalAPI",
                     "description": "Reference the TerminalAPI package."
                 }
@@ -100,7 +151,7 @@
         },
         "HasNuGetPackage" : {
             "type": "computed",
-            "value": "NuGetPackages == ConfigurableCompany || NuGetPackages == CSync || NuGetPackages == LethalLib || NuGetPackages == LethalNetworkAPI || NuGetPackages == TerminalAPI"
+            "value": "NuGetPackages == ConfigurableCompany || NuGetPackages == CSync || NuGetPackages == LethalLib || NuGetPackages == LethalNetworkAPI || NuGetPackages == LethalSettings || NuGetPackages == TerminalAPI"
         }
     },
     "sources": [
@@ -120,14 +171,20 @@
             ],
             "modifiers": [
                 {
-                    "condition": "(OS == \"Windows_NT\")",
+                    "condition": "UseNetcodePatcher",
                     "include": [
+                        "install-netcode-patcher.*"
+                    ]
+                },
+                {
+                    "condition": "OS != \"Windows_NT\"",
+                    "exclude": [
                         "**.cmd"
                     ]
                 },
                 {
-                    "condition": "(OS != \"Windows_NT\")",
-                    "include": [
+                    "condition": "OS == \"Windows_NT\"",
+                    "exclude": [
                         "**.sh"
                     ]
                 }
@@ -136,10 +193,10 @@
     ],
     "postActions": [
         {
-            "condition": "(OS != \"Windows_NT\")",
+            "condition": "(OS != \"Windows_NT\") && (UseNetcodePatcher || UseThunderstoreCLI)",
             "description": "Make scripts executable",
             "manualInstructions": [{
-              "text": "Run 'chmod +x *.sh'"
+                "text": "Run 'chmod +x *.sh'"
             }],
             "actionId": "cb9a6cf3-4f5c-4860-b9d2-03a574959774",
             "args": {
@@ -149,7 +206,7 @@
         },
         {
             "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
-            "condition": "(UseNetcodePatcher == true) && (OS != \"Windows_NT\")",
+            "condition": "(UseNetcodePatcher) && (OS != \"Windows_NT\")",
             "args": {
                 "executable": "install-netcode-patcher.sh",
                 "redirectStandardOutput": false,
@@ -163,7 +220,7 @@
         },
         {
             "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
-            "condition": "(UseNetcodePatcher == true) && (OS == \"Windows_NT\")",
+            "condition": "(UseNetcodePatcher) && (OS == \"Windows_NT\")",
             "args": {
                 "executable": "install-netcode-patcher.cmd",
                 "redirectStandardOutput": false,
@@ -174,6 +231,16 @@
             }],
             "continueOnError": false,
             "description ": "Setups Netcode Patcher by calling install-netcode-patcher.cmd"
+        },
+        {
+            "description": "Add projects to solution",
+            "manualInstructions": [ { "text": "Add generated project to solution manually." } ],
+            "args": {
+                "solutionFolder": "src",
+                "projectFiles": [ "MonoMod.ModTemplate.csproj" ]
+            },
+            "actionId": "D396686C-DE0E-4DE6-906D-291CD29FC5DE",
+            "continueOnError": true
         }
     ]
 }
