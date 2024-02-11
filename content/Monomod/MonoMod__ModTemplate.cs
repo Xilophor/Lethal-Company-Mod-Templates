@@ -9,7 +9,7 @@ using System.Reflection;
 namespace MonoMod._ModTemplate;
 
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
-#if (NuGetPackages = ConfigurableCompany)
+#if (NuGetPackages == ConfigurableCompany)
 [BepInDependency(LethalConfiguration.PLUGIN_GUID, BepInDependency.DependencyFlags.HardDependency)]
 #endif
 #if (NuGetPackages == CSync)
@@ -29,7 +29,7 @@ namespace MonoMod._ModTemplate;
 #endif
 public class MonoMod__ModTemplate : BaseUnityPlugin
 {
-    public static Plugin Instance { get; private set; } = null!;
+    public static MonoMod__ModTemplate Instance { get; private set; } = null!;
     internal new static ManualLogSource Logger { get; private set; } = null!;
 
     // If you use the method of hooking shown in the README, add to this list; otherwise ignore or remove this list.
@@ -48,7 +48,7 @@ public class MonoMod__ModTemplate : BaseUnityPlugin
         Logger.LogInfo($"{MyPluginInfo.PLUGIN_GUID} v{MyPluginInfo.PLUGIN_VERSION} has loaded!");
     }
 
-    private void Hook()
+    internal static void Hook()
     {
         Logger.LogDebug("Hooking...");
 
@@ -67,7 +67,7 @@ public class MonoMod__ModTemplate : BaseUnityPlugin
         Logger.LogDebug("Finished Hooking!");
     }
 
-    private void Unhook()
+    internal static void Unhook()
     {
         Logger.LogDebug("Unhooking...");
 

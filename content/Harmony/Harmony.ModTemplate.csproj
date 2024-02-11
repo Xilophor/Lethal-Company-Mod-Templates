@@ -7,11 +7,18 @@
 <!--#if (!UseMinVer) -->
         <!-- Change to whatever version you're currently on. -->
         <Version>{Version}</Version>
-<!--#else -->
-        <MinVerDefaultPreReleaseIdentifiers>dev</MinVerDefaultPreReleaseIdentifiers>
-        <MinVerTagPrefix>v</MinVerTagPrefix>
 <!--#endif -->
     </PropertyGroup>
+<!--#if (UseMinVer) -->
+
+    <!-- Set Mod Version with MinVer -->
+    <Target Name="SetModVersion" BeforeTargets="AddGeneratedFile" DependsOnTargets="MinVer">
+        <PropertyGroup>
+            <PlainVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)</PlainVersion>
+            <BepInExPluginVersion>$(PlainVersion)</BepInExPluginVersion>
+        </PropertyGroup>
+    </Target>
+<!--#endif -->
 
     <!-- Project Properties -->
     <PropertyGroup>
@@ -34,6 +41,14 @@
         </RestoreAdditionalProjectSources>
     </PropertyGroup>
 
+<!--#if (UseMinVer) -->
+    <!-- Set MinVer Tag & Prerelease Properties -->
+    <PropertyGroup>
+        <MinVerDefaultPreReleaseIdentifiers>dev</MinVerDefaultPreReleaseIdentifiers>
+        <MinVerTagPrefix>v</MinVerTagPrefix>
+    </PropertyGroup>
+
+<!--#endif -->
 <!--#if (PublicizeGameAssemblies) -->
     <!-- Disable Publicizer Warnings -->
     <PropertyGroup>

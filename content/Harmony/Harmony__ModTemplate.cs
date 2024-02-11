@@ -9,7 +9,7 @@ using System.Reflection;
 namespace Harmony._ModTemplate;
 
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
-#if (NuGetPackages = ConfigurableCompany)
+#if (NuGetPackages == ConfigurableCompany)
 [BepInDependency(LethalConfiguration.PLUGIN_GUID, BepInDependency.DependencyFlags.HardDependency)]
 #endif
 #if (NuGetPackages == CSync)
@@ -29,9 +29,9 @@ namespace Harmony._ModTemplate;
 #endif
 public class Harmony__ModTemplate : BaseUnityPlugin
 {
-    public static Plugin Instance { get; private set; } = null!;
+    public static Harmony__ModTemplate Instance { get; private set; } = null!;
     internal new static ManualLogSource Logger { get; private set; } = null!;
-    private static Harmony harmony = null!;
+    internal static Harmony? Harmony { get; set; }
 
     private void Awake()
     {
@@ -46,24 +46,24 @@ public class Harmony__ModTemplate : BaseUnityPlugin
         Logger.LogInfo($"{MyPluginInfo.PLUGIN_GUID} v{MyPluginInfo.PLUGIN_VERSION} has loaded!");
     }
 
-    private void Patch()
+    internal static void Patch()
     {
-        harmony ??= new Harmony(MyPluginInfo.PLUGIN_GUID);
+        Harmony ??= new Harmony(MyPluginInfo.PLUGIN_GUID);
 
         Logger.LogDebug("Patching...");
 
-        harmony.PatchAll();
+        Harmony.PatchAll();
 
-        Logger.LogDebug("Finished Patching!");
+        Logger.LogDebug("Finished patching!");
     }
 
-    private void Unpatch()
+    internal static void Unpatch()
     {
         Logger.LogDebug("Unpatching...");
 
-        harmony.UnpatchSelf();
+        Harmony?.UnpatchSelf();
 
-        Logger.LogDebug("Finished Unpatching!");
+        Logger.LogDebug("Finished unpatching!");
     }
 #if (UseNetcodePatcher)
 
