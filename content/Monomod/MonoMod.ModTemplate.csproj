@@ -3,13 +3,13 @@
     <!-- BepInEx Properties -->
     <PropertyGroup>
         <AssemblyName>{ModGuid}</AssemblyName>
-        <Product>MonoMod.ModTemplate</Product>
-        <!--#if (!UseMinVer) -->
+        <Product>{Product}</Product>
+<!--#if (!UseMinVer) -->
         <!-- Change to whatever version you're currently on. -->
         <Version>{Version}</Version>
-        <!--#endif -->
+<!--#endif -->
     </PropertyGroup>
-    <!--#if (UseMinVer) -->
+<!--#if (UseMinVer) -->
 
     <!-- Set Mod Version with MinVer -->
     <Target Name="SetModVersion" BeforeTargets="AddGeneratedFile" DependsOnTargets="MinVer">
@@ -18,7 +18,7 @@
             <BepInExPluginVersion>$(PlainVersion)</BepInExPluginVersion>
         </PropertyGroup>
     </Target>
-    <!--#endif -->
+<!--#endif -->
 
     <!-- Project Properties -->
     <PropertyGroup>

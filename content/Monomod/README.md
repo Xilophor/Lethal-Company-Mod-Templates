@@ -5,21 +5,21 @@ Thank you for using the mod template! Here are a few tips to help you on your jo
 ## Versioning
 
 BepInEx uses [semantic versioning, or semver](https://semver.org/), for the mod's version info.
-//#if (!UseMinVer)
+<!--#if (!UseMinVer) -->
 To increment it, you can either modify the version tag in the `.csproj` file directly, or use your IDE's UX to increment the version. Below is an example of modifying the `.csproj` file directly:
 
 ```xml
 <!-- BepInEx Properties -->
 <PropertyGroup>
     <AssemblyName>{ModGuid}</AssemblyName>
-    <Product>MonoMod.ModTemplate</Product>
+    <Product>{Product}</Product>
     <!-- Change to whatever version you're currently on. -->
     <Version>{Version}</Version>
 </PropertyGroup>
 ```
 
 Your IDE will have the setting in `Package` or `NuGet` under `General` or `Metadata`, respectively.
-//#else
+<!--#else -->
 [MinVer](https://github.com/adamralph/minver?tab=readme-ov-file#usage) will automatically
 version your mod based on the latest git tag, as well as the number of commits made since then.
 
@@ -35,7 +35,11 @@ git push --tags
 This creates a new tag, `v1.2.3`, at the currently checked-out commit,
 and pushes the tag to the git version-control system (vcs).
 MinVer will then be able to use this when you build your project to set your mod's version.
-//#endif
+
+> **Note:** You *must* have a `v` in front of the version number, otherwise MinVer will not recognize it.
+>
+> If you prefer not to have `v1.2.3` and instead `1.2.3`, you can remove the `<MinVerTagPrefix>v</MinVerTagPrefix>` line in your `.csproj` file.
+<!--#endif -->
 
 ## Logging
 

@@ -11,6 +11,22 @@
         "type": "project"
     },
     "preferNameDirectory": true,
+    "forms": {
+        "namespace": {
+            "identifier": "safe_namespace"
+        },
+        "classname": {
+            "identifier": "safe_name"
+        },
+        "guid": {
+            "identifier": "replace",
+            "pattern": "[^a-zA-Z0-9\\._\\-]+",
+            "replacement": ""
+        },
+        "identity": {
+            "identifier": "identity"
+        }
+    },
     "symbols": {
         "ModGuid": {
             "type": "parameter",
@@ -44,19 +60,18 @@
             "replaces": "MonoMod__ModTemplate",
             "fileRename": "MonoMod__ModTemplate"
         },
+        "IdentityReplacer": {
+            "type": "derived",
+            "valueSource": "name",
+            "valueTransform": "identity",
+            "replaces": "{Product}"
+        },
         "MMHOOKLocation": {
             "type": "parameter",
             "description": "The file path of the MMHOOK folder. This is typically located in your (profile) plugin folder. Must include a trailing separator (/)",
             "datatype": "text",
             "isRequired": true,
             "replaces": "{MMHOOKDir}"
-        },
-        "Description": {
-            "type": "parameter",
-            "description": "The description of your mod.",
-            "datatype": "text",
-            "defaultValue": "My mod description.",
-            "replaces": "{Description}"
         },
         "Version": {
             "type": "parameter",
