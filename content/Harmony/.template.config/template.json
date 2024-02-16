@@ -78,6 +78,7 @@
             "type": "parameter",
             "description": "The file path of the plugin or profile directory to copy to for quick testing. If left blank, the mod will not be copied. Must include a trailing separator (/)",
             "datatype": "text",
+            "defaultValue": "",
             "replaces": "{PluginDirectory}"
         },
         "ReferenceGameLibsPackage": {
@@ -160,7 +161,7 @@
             ],
             "modifiers": [
                 {
-                    "condition": "defined( BepInExPluginLocation )",
+                    "condition": "BepInExPluginLocation != \"\"",
                     "include": [
                         "**.user"
                     ]

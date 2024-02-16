@@ -68,10 +68,10 @@
         },
         "MMHOOKLocation": {
             "type": "parameter",
-            "description": "The file path of the MMHOOK folder. This is typically located in your (profile) plugin folder. Must include a trailing separator (/)",
+            "description": "The file path of the MMHOOK folder, for using the HookGen (On.x & IL.x). This is typically located in your (profile) plugin folder. Must include a trailing separator (/).",
             "datatype": "text",
-            "isRequired": true,
-            "replaces": "{MMHOOKDir}"
+            "replaces": "{MMHOOKDir}",
+            "defaultValue": ""
         },
         "Version": {
             "type": "parameter",
@@ -156,10 +156,6 @@
     },
     "sources": [
         {
-            "include": [
-                "**/*",
-                "**.user"
-            ],
             "exclude": [
                 "**/[Bb]in/**",
                 "**/[Oo]bj/**",
@@ -167,9 +163,16 @@
                 "**/*.filelist",
                 "**/*.lock.json",
                 "**/*.cmd",
-                "**/*.sh"
+                "**/*.sh",
+                "**/*.user"
             ],
             "modifiers": [
+                {
+                    "condition": "BepInExPluginLocation != \"\" || MMHOOKLocation != \"\"",
+                    "include": [
+                        "**.user"
+                    ]
+                },
                 {
                     "condition": "UseNetcodePatcher",
                     "include": [

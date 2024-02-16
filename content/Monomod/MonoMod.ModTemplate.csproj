@@ -115,13 +115,15 @@
 <!--#endif -->
     </ItemGroup>
 <!--#endif -->
+<!--#if (MMHOOKLocation != "") -->
 
-    <!-- Package References - Game Assemblies -->
+    <!-- Package References - Game Assembly HookGen -->
     <ItemGroup>
         <Reference Include="MMHOOK_Assembly-CSharp">
             <HintPath>$(MMHOOKDirectory)MMHOOK_Assembly-CSharp.dll</HintPath>
         </Reference>
     </ItemGroup>
+<!--#endif -->
 <!--#if (UseNetcodePatcher) -->
 
     <!-- Netcode Patcher Post-Build Event -->
