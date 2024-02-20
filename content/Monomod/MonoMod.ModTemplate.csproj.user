@@ -1,20 +1,22 @@
 <Project>
     <!-- Custom Variables -->
     <PropertyGroup>
-<!--#if (BepInExPluginLocation != "") -->
-        <CopyToDirectory>../Lethal Company/BepInEx/plugins/</CopyToDirectory>
-<!--#endif -->
+        <!--#if (BepInExPluginLocation != "") -->
+        <CopyToDirectory>{PluginDirectory}</CopyToDirectory>
+        <!--#endif -->
+        <!--#if (MMHOOKLocation != "") -->
         <MMHOOKDirectory>{MMHOOKDir}</MMHOOKDirectory>
+        <!--#endif -->
     </PropertyGroup>
+    <!--#if (BepInExPluginLocation != "") -->
 
     <!-- Copy to Plugin Directory for Quicker Testing -->
-<!--#if (BepInExPluginLocation != "") -->
-<!--#if (UseNetcodePatcher) -->
+    <!--#if (UseNetcodePatcher) -->
     <Target Name="CopyFiles" DependsOnTargets="NetcodePatch" AfterTargets="PostBuildEvent">
-<!--#else -->
+    <!--#else -->
     <Target Name="CopyFiles" AfterTargets="PostBuildEvent">
-<!--#endif -->
+        <!--#endif -->
         <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(CopyToDirectory)"/>
     </Target>
-<!--#endif -->
+    <!--#endif -->
 </Project>

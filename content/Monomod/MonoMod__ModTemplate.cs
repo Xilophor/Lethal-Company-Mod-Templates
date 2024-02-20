@@ -1,9 +1,15 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
-using MonoMod.RuntimeDetour;
+using MonoMod._ModTemplate.Patches;
 #if (UseNetcodePatcher)
 using System;
+#endif
+#if (UseNetcodePatcher || MMHOOKLocation == "")
 using System.Reflection;
+#endif
+#if (MMHOOKLocation == "")
+using System.Collections.Generic;
+using MonoMod.RuntimeDetour;
 #endif
 
 namespace MonoMod._ModTemplate;
@@ -31,9 +37,9 @@ public class MonoMod__ModTemplate : BaseUnityPlugin
 {
     public static MonoMod__ModTemplate Instance { get; private set; } = null!;
     internal new static ManualLogSource Logger { get; private set; } = null!;
-
-    // If you use the method of hooking shown in the README, add to this list; otherwise ignore or remove this list.
-    internal static readonly List<IDetour> Hooks { get; set; } = new List<IDetour>();
+#if (MMHOOKLocation == "")
+    internal static List<IDetour> Hooks { get; set; } = new List<IDetour>();
+#endif
 
     private void Awake()
     {
@@ -53,16 +59,34 @@ public class MonoMod__ModTemplate : BaseUnityPlugin
         Logger.LogDebug("Hooking...");
 
         /*
-         *  Subscribe with 'On.Class.Method += CustomClass.CustomMethod;' for each method you're patching
-         *  or add to the list for each method you're patching with:
-         *
-         *  Hooks.Add(
-#if (PublicizeGameAssemblies)
-         *      new Hook(typeof(Class).GetMethod(nameof(Class.Method)), CustomClass.CustomMethod);
+#if (MMHOOKLocation != "")
+         *  Subscribe with 'On.Class.Method += CustomClass.CustomMethod;' for each method you're patching.
 #else
-         *      new Hook(typeof(Class).GetMethod("Method"), CustomClass.CustomMethod);
-#end
+         *  Add to the Hooks list for each method you're patching with:
+         *
+#if (PublicizeGameAssemblies)
+         *  Hooks.Add(new Hook(
+         *      typeof(Class).GetMethod(nameof(Class.Method), BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static),
+         *      CustomClass.CustomMethod));
+#else
+         *  Hooks.Add(new Hook(
+         *      typeof(Class).GetMethod("Method", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static),
+         *      CustomClass.CustomMethod));
+#endif
+#endif
          */
+
+#if (MMHOOKLocation != "")
+        On.TVScript.SwitchTVLocalClient += ExampleTVPatch.SwitchTvPatch;
+#else
+        Hooks.Add(new Hook(
+#if (PublicizeGameAssemblies)
+                typeof(TVScript).GetMethod(nameof(TVScript.SwitchTVLocalClient), BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static),
+#else
+                typeof(TVScript).GetMethod("SwitchTVLocalClient", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static),
+#endif
+                ExampleTVPatch.SwitchTVPatch));
+#endif
 
         Logger.LogDebug("Finished Hooking!");
     }
@@ -71,14 +95,17 @@ public class MonoMod__ModTemplate : BaseUnityPlugin
     {
         Logger.LogDebug("Unhooking...");
 
+#if (MMHOOKLocation != "")
         /*
-         *  Unsubscribe with 'On.Class.Method -= CustomClass.CustomMethod;' for each method you're patching
-         *  or remove from the list with:
-         *
-         *  foreach (var detour in Hooks)
-         *      detour.Undo();
-         *  Hooks.Clear();
+         *  Unsubscribe with 'On.Class.Method -= CustomClass.CustomMethod;' for each method you're patching.
          */
+
+        On.TVScript.SwitchTVLocalClient -= ExampleTVPatch.SwitchTvPatch;
+#else
+        foreach (var detour in Hooks)
+            detour.Undo();
+        Hooks.Clear();
+#endif
 
         Logger.LogDebug("Finished Unhooking!");
     }
