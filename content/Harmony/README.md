@@ -78,7 +78,7 @@ Then in that class, you can use
 <!--#else -->
 `[HarmonyPatch(typeof(ClassToPatch), "MethodToPatch")]`
 <!--#endif -->
-where `ClassToPatch` is the class you're patching (ie `PlayerControllerB`), and `MethodToPatch` is the method you're patching (ie `Update`).
+where `ClassToPatch` is the class you're patching (ie `TVScript`), and `MethodToPatch` is the method you're patching (ie `SwitchTVLocalClient`).
 
 Then you can use
 [the appropriate prefix, postfix, transpiler, or finalizer](https://harmony.pardeike.net/articles/patching.html) attribute.
@@ -87,8 +87,8 @@ _While you can use_ `return false;` _in a prefix patch,
 it is **HIGHLY DISCOURAGED** as it can **AND WILL** cause compatibility issues with other mods._
 
 For example, we want to add a patch that will debug log the current players' position.
-We have the following postfix patch patching the `Update` method
-in `PlayerControllerB`:
+We have the following postfix patch patching the `SwitchTVLocalClient` method
+in `TVScript`:
 
 ```csharp
 using HarmonyLib;
@@ -119,5 +119,5 @@ public class ExampleTVPatch
 ```
 
 In this case we include the type of the class we're patching in the attribute
-before our `PlayerControllerBPatches` class,
-as our class will only patch the `PlayerControllerB` class.
+before our `ExampleTVPatch` class,
+as our class will only patch the `TVScript` class.
