@@ -93,30 +93,6 @@
         <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all"/>
     </ItemGroup>
 <!--/+:msbuild-conditional:noEmit -->
-<!--#if (HasNuGetPackage) -->
-
-    <!-- Secondary Package References - Libraries and APIs -->
-    <ItemGroup>
-<!--#if (NuGetPackages = ConfigurableCompany -->
-        <PackageReference Include="Amrv.ConfigurableCompany" Version="2.*" PrivateAssets="all"/>
-<!--#endif -->
-<!--#if (NuGetPackages == CSync) -->
-        <PackageReference Include="Owen3H.BepInEx.CSync" Version="1.*" PrivateAssets="all"/>
-<!--#endif -->
-<!--#if (NuGetPackages == LethalLib) -->
-        <PackageReference Include="Evaisa.LethalLib" Version="0.*" PrivateAssets="all"/>
-<!--#endif -->
-<!--#if (NuGetPackages == LethalNetworkAPI) -->
-        <PackageReference Include="Xilophor.LethalNetworkAPI" Version="2.*" PrivateAssets="all"/>
-<!--#endif -->
-<!--#if (NuGetPackages == LethalSettings) -->
-        <PackageReference Include="LethalSettings" Version="1.*" PrivateAssets="all"/>
-<!--#endif -->
-<!--#if (NuGetPackages == TerminalAPI) -->
-        <PackageReference Include="NotAtomicBomb.TerminalAPI" Version="1.*" PrivateAssets="all"/>
-<!--#endif -->
-    </ItemGroup>
-<!--#endif -->
 <!--#if (UseNetcodePatcher) -->
 
     <!-- Netcode Patcher Post-Build Event -->

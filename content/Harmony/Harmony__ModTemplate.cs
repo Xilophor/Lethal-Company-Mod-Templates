@@ -9,24 +9,6 @@ using UnityEngine;
 namespace Harmony._ModTemplate;
 
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
-#if (NuGetPackages == ConfigurableCompany)
-[BepInDependency(LethalConfiguration.PLUGIN_GUID, BepInDependency.DependencyFlags.HardDependency)]
-#endif
-#if (NuGetPackages == CSync)
-[BepInDependency("io.github.CSync", BepInDependency.DependencyFlags.HardDependency)]
-#endif
-#if (NuGetPackages == LethalLib)
-[BepInDependency("evaisa.lethallib", BepInDependency.DependencyFlags.HardDependency)]
-#endif
-#if (NuGetPackages == LethalNetworkAPI)
-[BepInDependency("LethalNetworkAPI", BepInDependency.DependencyFlags.HardDependency)]
-#endif
-#if (NuGetPackages == LethalSettings)
-[BepInDependency("com.willis.lc.lethalsettings", BepInDependency.DependencyFlags.HardDependency)]
-#endif
-#if (NuGetPackages == TerminalAPI)
-[BepInDependency("atomic.terminalapi", BepInDependency.DependencyFlags.HardDependency)]
-#endif
 public class Harmony__ModTemplate : BaseUnityPlugin
 {
     public static Harmony__ModTemplate Instance { get; private set; } = null!;
