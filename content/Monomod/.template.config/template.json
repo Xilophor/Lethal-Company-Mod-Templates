@@ -42,13 +42,6 @@
             "valueTransform": "identity",
             "replaces": "{Product}"
         },
-        "MMHOOKLocation": {
-            "type": "parameter",
-            "description": "The file path of the MMHOOK folder, for using the HookGen (On.x & IL.x). This is typically located in your (profile) plugin folder. Must include a trailing separator (/).",
-            "datatype": "text",
-            "replaces": "{MMHOOKDir}",
-            "defaultValue": ""
-        },
         "Version": {
             "type": "parameter",
             "description": "The initial version of your mod, in semantic versioning. (Ex. 1.0.0)",
@@ -86,12 +79,51 @@
             },
             "replaces": "{ModGuid}"
         },
+        "MMHOOKLocation": {
+            "type": "parameter",
+            "description": "The file path of the MMHOOK folder, for using the HookGen (On.x & IL.x). This is typically located in your (profile) plugin folder. Must include a trailing separator (/).",
+            "datatype": "text",
+            "defaultValue": ""
+        },
+        "MMHOOKLocationReplacer": {
+                "source": "MMHOOKLocation",
+                "steps": [
+                    {
+                        "regex": "/.*[^/]$",
+                        "replacement": "$&/"
+                    },
+                    {
+                        "regex": "\\\\.*[^\\\\]$",
+                        "replacement": "$&\\"
+                    }
+                ]
+            },
+            "replaces": "{MMHOOKDir}"
+        },
         "BepInExPluginLocation": {
             "type": "parameter",
             "description": "The file path of the plugin or profile directory to copy to for quick testing. If left blank, the mod will not be copied. Must include a trailing separator (/)",
             "datatype": "text",
-            "replaces": "{PluginDirectory}",
             "defaultValue": ""
+        },
+        "BepInExPluginLocationReplacer": {
+            "type": "generated",
+            "generator": "regex",
+            "datatype": "text",
+            "parameters": {
+                "source": "BepInExPluginLocation",
+                "steps": [
+                    {
+                        "regex": "/.*[^/]$",
+                        "replacement": "$&/"
+                    },
+                    {
+                        "regex": "\\\\.*[^\\\\]$",
+                        "replacement": "$&\\"
+                    }
+                ]
+            },
+            "replaces": "{PluginDirectory}"
         },
         "ReferenceGameLibsPackage": {
             "type": "parameter",
