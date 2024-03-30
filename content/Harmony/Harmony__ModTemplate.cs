@@ -2,8 +2,8 @@ using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
 #if (UseNetcodePatcher)
-using System;
 using System.Reflection;
+using UnityEngine;
 #endif
 #if (LobbyCompatibility)
 using LobbyCompatibility.Attributes;
@@ -13,24 +13,6 @@ using LobbyCompatibility.Enums;
 namespace Harmony._ModTemplate;
 
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
-#if (NuGetPackages == ConfigurableCompany)
-[BepInDependency(LethalConfiguration.PLUGIN_GUID, BepInDependency.DependencyFlags.HardDependency)]
-#endif
-#if (NuGetPackages == CSync)
-[BepInDependency("io.github.CSync", BepInDependency.DependencyFlags.HardDependency)]
-#endif
-#if (NuGetPackages == LethalLib)
-[BepInDependency("evaisa.lethallib", BepInDependency.DependencyFlags.HardDependency)]
-#endif
-#if (NuGetPackages == LethalNetworkAPI)
-[BepInDependency("LethalNetworkAPI", BepInDependency.DependencyFlags.HardDependency)]
-#endif
-#if (NuGetPackages == LethalSettings)
-[BepInDependency("com.willis.lc.lethalsettings", BepInDependency.DependencyFlags.HardDependency)]
-#endif
-#if (NuGetPackages == TerminalAPI)
-[BepInDependency("atomic.terminalapi", BepInDependency.DependencyFlags.HardDependency)]
-#endif
 #if (LobbyCompatibility)
 [BepInDependency("BMX.LobbyCompatibility", BepInDependency.DependencyFlags.HardDependency)]
 [LobbyCompatibility({CompatibilityLevel}, {VersionStrictness})]

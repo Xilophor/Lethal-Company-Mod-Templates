@@ -18,11 +18,6 @@
         "classname": {
             "identifier": "safe_name"
         },
-        "guid": {
-            "identifier": "replace",
-            "pattern": "[^a-zA-Z0-9\\._\\-]+",
-            "replacement": ""
-        },
         "identity": {
             "identifier": "identity"
         }
@@ -36,15 +31,25 @@
         "ModGuidGen": {
             "type": "generated",
             "generator": "coalesce",
+            "datatype": "text",
             "parameters": {
                 "sourceVariableName": "ModGuid",
                 "fallbackVariableName": "name"
             }
         },
         "ModGuidReplacer": {
-            "type": "derived",
-            "valueSource": "ModGuidGen",
-            "valueTransform": "guid",
+            "type": "generated",
+            "generator": "regex",
+            "datatype": "text",
+            "parameters": {
+                "source": "ModGuidGen",
+                "steps": [
+                    {
+                        "regex": "[^a-zA-Z0-9\\._\\-]+",
+                        "replacement": ""
+                    }
+                ]
+            },
             "replaces": "{ModGuid}"
         },
         "NamespaceReplacer": {
@@ -142,9 +147,27 @@
         },
         "BepInExPluginLocation": {
             "type": "parameter",
-            "description": "The file path of the plugin or profile directory to copy to for quick testing. If left blank, the mod will not be copied. Must include a trailing separator (/)",
+            "description": "The file path of the plugin or profile directory to copy to for quick testing. If left blank, the mod will not be copied.",
             "datatype": "text",
-            "defaultValue": "",
+            "defaultValue": ""
+        },
+        "BepInExPluginLocationReplacer": {
+            "type": "generated",
+            "generator": "regex",
+            "datatype": "text",
+            "parameters": {
+                "source": "BepInExPluginLocation",
+                "steps": [
+                    {
+                        "regex": "/.*[^/]$",
+                        "replacement": "$&/"
+                    },
+                    {
+                        "regex": "\\\\.*[^\\\\]$",
+                        "replacement": "$&\\"
+                    }
+                ]
+            },
             "replaces": "{PluginDirectory}"
         },
         "ReferenceGameLibsPackage": {
@@ -170,47 +193,6 @@
             "description": "Publicize the Game Assemblies to access internal or private classes, fields, methods, and properties. If using Visual Studio, you must run the cmd/sh file yourself to finish installation.",
             "datatype": "bool",
             "defaultValue": "false"
-        },
-        "NuGetPackages": {
-            "type": "parameter",
-            "description": "CURRENTLY DOES NOT WORK WITH VISUAL STUDIO. Packages to reference for your mod. This will allow you to avoid manually referencing the assemblies if they have nuget packages.",
-            "datatype": "choice",
-            "enableQuotelessLiterals": true,
-            "allowMultipleValues": true,
-            "choices": [
-                {
-                    "choice": "none"
-                },
-                {
-                    "choice": "ConfigurableCompany",
-                    "description": "Reference the ConfigurableCompany package."
-                },
-                {
-                    "choice": "CSync",
-                    "description": "Reference the CSync package."
-                },
-                {
-                    "choice": "LethalLib",
-                    "description": "Reference the Lethal Lib package."
-                },
-                {
-                    "choice": "LethalNetworkAPI",
-                    "description": "Reference the LethalNetworkAPI package."
-                },
-                {
-                    "choice": "LethalSettings",
-                    "description": "Reference the LethalNetworkAPI package."
-                },
-                {
-                    "choice": "TerminalAPI",
-                    "description": "Reference the TerminalAPI package."
-                }
-            ],
-            "defaultValue": "none"
-        },
-        "HasNuGetPackage" : {
-            "type": "computed",
-            "value": "NuGetPackages == ConfigurableCompany || NuGetPackages == CSync || NuGetPackages == LethalLib || NuGetPackages == LethalNetworkAPI || NuGetPackages == LethalSettings || NuGetPackages == TerminalAPI"
         }
     },
     "sources": [
@@ -220,10 +202,10 @@
                 "**/[Oo]bj/**",
                 ".template.config/**/*",
                 "**/*.filelist",
-                "**/*.user",
                 "**/*.lock.json",
                 "**/*.cmd",
-                "**/*.sh"
+                "**/*.sh",
+                "**/*.user"
             ],
             "modifiers": [
                 {
@@ -255,10 +237,10 @@
     ],
     "postActions": [
         {
-            "condition": "(OS != \"Windows_NT\") && (UseNetcodePatcher || UseThunderstoreCLI)",
+            "condition": "(OS != \"Windows_NT\") && (UseNetcodePatcher)",
             "description": "Make scripts executable",
             "manualInstructions": [{
-              "text": "Run 'chmod +x *.sh'"
+                "text": "Run 'chmod +x *.sh'"
             }],
             "actionId": "cb9a6cf3-4f5c-4860-b9d2-03a574959774",
             "args": {
@@ -278,7 +260,7 @@
                 "text": "Run 'install-netcode-patcher.sh'"
             }],
             "continueOnError": false,
-            "description ": "Setups Netcode Patcher by calling install-netcode-patcher.sh"
+            "description ": "Sets up Netcode Patcher by running install-netcode-patcher.sh"
         },
         {
             "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
@@ -292,7 +274,7 @@
                 "text": "Run 'install-netcode-patcher.cmd'"
             }],
             "continueOnError": false,
-            "description ": "Setups Netcode Patcher by calling install-netcode-patcher.cmd"
+            "description ": "Sets up Netcode Patcher by running install-netcode-patcher.cmd"
         },
         {
             "description": "Add projects to solution",

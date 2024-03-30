@@ -1,9 +1,7 @@
 using BepInEx;
 using BepInEx.Logging;
 using MonoMod._ModTemplate.Patches;
-#if (UseNetcodePatcher)
-using System;
-#endif
+using HarmonyLib;
 #if (UseNetcodePatcher || MMHOOKLocation == "")
 using System.Reflection;
 #endif
@@ -14,29 +12,13 @@ using MonoMod.RuntimeDetour;
 #if (LobbyCompatibility)
 using LobbyCompatibility.Attributes;
 using LobbyCompatibility.Enums;
+#if (UseNetcodePatcher)
+using UnityEngine;
 #endif
 
 namespace MonoMod._ModTemplate;
 
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
-#if (NuGetPackages == ConfigurableCompany)
-[BepInDependency(LethalConfiguration.PLUGIN_GUID, BepInDependency.DependencyFlags.HardDependency)]
-#endif
-#if (NuGetPackages == CSync)
-[BepInDependency("io.github.CSync", BepInDependency.DependencyFlags.HardDependency)]
-#endif
-#if (NuGetPackages == LethalLib)
-[BepInDependency("evaisa.lethallib", BepInDependency.DependencyFlags.HardDependency)]
-#endif
-#if (NuGetPackages == LethalNetworkAPI)
-[BepInDependency("LethalNetworkAPI", BepInDependency.DependencyFlags.HardDependency)]
-#endif
-#if (NuGetPackages == LethalSettings)
-[BepInDependency("com.willis.lc.lethalsettings", BepInDependency.DependencyFlags.HardDependency)]
-#endif
-#if (NuGetPackages == TerminalAPI)
-[BepInDependency("atomic.terminalapi", BepInDependency.DependencyFlags.HardDependency)]
-#endif
 #if (LobbyCompatibility)
 [BepInDependency("BMX.LobbyCompatibility", BepInDependency.DependencyFlags.HardDependency)]
 [LobbyCompatibility({CompatibilityLevel}, {VersionStrictness})]
@@ -74,24 +56,24 @@ public class MonoMod__ModTemplate : BaseUnityPlugin
          *
 #if (PublicizeGameAssemblies)
          *  Hooks.Add(new Hook(
-         *      typeof(Class).GetMethod(nameof(Class.Method), BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static),
+         *      typeof(Class).GetMethod(nameof(Class.Method), AccessTools.allDeclared),
          *      CustomClass.CustomMethod));
 #else
          *  Hooks.Add(new Hook(
-         *      typeof(Class).GetMethod("Method", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static),
+         *      typeof(Class).GetMethod("Method", AccessTools.allDeclared),
          *      CustomClass.CustomMethod));
 #endif
 #endif
          */
 
 #if (MMHOOKLocation != "")
-        On.TVScript.SwitchTVLocalClient += ExampleTVPatch.SwitchTvPatch;
+        On.TVScript.SwitchTVLocalClient += ExampleTVPatch.SwitchTVPatch;
 #else
         Hooks.Add(new Hook(
 #if (PublicizeGameAssemblies)
-                typeof(TVScript).GetMethod(nameof(TVScript.SwitchTVLocalClient), BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static),
+                typeof(TVScript).GetMethod(nameof(TVScript.SwitchTVLocalClient), AccessTools.allDeclared),
 #else
-                typeof(TVScript).GetMethod("SwitchTVLocalClient", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static),
+                typeof(TVScript).GetMethod("SwitchTVLocalClient", AccessTools.allDeclared),
 #endif
                 ExampleTVPatch.SwitchTVPatch));
 #endif
@@ -108,7 +90,7 @@ public class MonoMod__ModTemplate : BaseUnityPlugin
          *  Unsubscribe with 'On.Class.Method -= CustomClass.CustomMethod;' for each method you're patching.
          */
 
-        On.TVScript.SwitchTVLocalClient -= ExampleTVPatch.SwitchTvPatch;
+        On.TVScript.SwitchTVLocalClient -= ExampleTVPatch.SwitchTVPatch;
 #else
         foreach (var detour in Hooks)
             detour.Undo();
