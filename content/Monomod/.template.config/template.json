@@ -147,7 +147,7 @@
         },
         "MMHOOKLocation": {
             "type": "parameter",
-            "description": "The file path of the MMHOOK folder, for using the HookGen (On.x & IL.x). This is typically located in your (profile) plugin folder. Must include a trailing separator (/).",
+            "description": "The file path of the MMHOOK folder, for using the HookGen (On.x & IL.x). This is typically located in your (profile) plugin folder.",
             "datatype": "text",
             "defaultValue": ""
         },
@@ -172,7 +172,7 @@
         },
         "BepInExPluginLocation": {
             "type": "parameter",
-            "description": "The file path of the plugin or profile directory to copy to for quick testing. If left blank, the mod will not be copied. Must include a trailing separator (/)",
+            "description": "The file path of the plugin or profile directory to copy to for quick testing. If left blank, the mod will not be copied.",
             "datatype": "text",
             "defaultValue": ""
         },
