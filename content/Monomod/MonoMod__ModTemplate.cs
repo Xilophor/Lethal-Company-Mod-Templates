@@ -1,4 +1,4 @@
-﻿using BepInEx;
+using BepInEx;
 using BepInEx.Logging;
 using MonoMod._ModTemplate.Patches;
 #if (UseNetcodePatcher)
@@ -15,24 +15,6 @@ using MonoMod.RuntimeDetour;
 namespace MonoMod._ModTemplate;
 
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
-#if (NuGetPackages == ConfigurableCompany)
-[BepInDependency(LethalConfiguration.PLUGIN_GUID, BepInDependency.DependencyFlags.HardDependency)]
-#endif
-#if (NuGetPackages == CSync)
-[BepInDependency("io.github.CSync", BepInDependency.DependencyFlags.HardDependency)]
-#endif
-#if (NuGetPackages == LethalLib)
-[BepInDependency("evaisa.lethallib", BepInDependency.DependencyFlags.HardDependency)]
-#endif
-#if (NuGetPackages == LethalNetworkAPI)
-[BepInDependency("LethalNetworkAPI", BepInDependency.DependencyFlags.HardDependency)]
-#endif
-#if (NuGetPackages == LethalSettings)
-[BepInDependency("com.willis.lc.lethalsettings", BepInDependency.DependencyFlags.HardDependency)]
-#endif
-#if (NuGetPackages == TerminalAPI)
-[BepInDependency("atomic.terminalapi", BepInDependency.DependencyFlags.HardDependency)]
-#endif
 public class MonoMod__ModTemplate : BaseUnityPlugin
 {
     public static MonoMod__ModTemplate Instance { get; private set; } = null!;
