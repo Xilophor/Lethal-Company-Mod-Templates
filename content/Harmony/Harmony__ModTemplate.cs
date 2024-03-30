@@ -1,9 +1,9 @@
-﻿using BepInEx;
+using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
 #if (UseNetcodePatcher)
-using System;
 using System.Reflection;
+using UnityEngine;
 #endif
 
 namespace Harmony._ModTemplate;

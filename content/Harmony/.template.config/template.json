@@ -154,10 +154,10 @@
                 "**/[Oo]bj/**",
                 ".template.config/**/*",
                 "**/*.filelist",
-                "**/*.user",
                 "**/*.lock.json",
                 "**/*.cmd",
-                "**/*.sh"
+                "**/*.sh",
+                "**/*.user"
             ],
             "modifiers": [
                 {
@@ -189,10 +189,10 @@
     ],
     "postActions": [
         {
-            "condition": "(OS != \"Windows_NT\") && (UseNetcodePatcher || UseThunderstoreCLI)",
+            "condition": "(OS != \"Windows_NT\") && (UseNetcodePatcher)",
             "description": "Make scripts executable",
             "manualInstructions": [{
-              "text": "Run 'chmod +x *.sh'"
+                "text": "Run 'chmod +x *.sh'"
             }],
             "actionId": "cb9a6cf3-4f5c-4860-b9d2-03a574959774",
             "args": {
@@ -212,7 +212,7 @@
                 "text": "Run 'install-netcode-patcher.sh'"
             }],
             "continueOnError": false,
-            "description ": "Setups Netcode Patcher by calling install-netcode-patcher.sh"
+            "description ": "Sets up Netcode Patcher by running install-netcode-patcher.sh"
         },
         {
             "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
@@ -226,7 +226,7 @@
                 "text": "Run 'install-netcode-patcher.cmd'"
             }],
             "continueOnError": false,
-            "description ": "Setups Netcode Patcher by calling install-netcode-patcher.cmd"
+            "description ": "Sets up Netcode Patcher by running install-netcode-patcher.cmd"
         },
         {
             "description": "Add projects to solution",
