@@ -2,15 +2,15 @@ using BepInEx;
 using BepInEx.Logging;
 using MonoMod._ModTemplate.Patches;
 using HarmonyLib;
-#if (UseNetcodePatcher)
-using System;
-#endif
 #if (UseNetcodePatcher || MMHOOKLocation == "")
 using System.Reflection;
 #endif
 #if (MMHOOKLocation == "")
 using System.Collections.Generic;
 using MonoMod.RuntimeDetour;
+#endif
+#if (UseNetcodePatcher)
+using UnityEngine;
 #endif
 
 namespace MonoMod._ModTemplate;
