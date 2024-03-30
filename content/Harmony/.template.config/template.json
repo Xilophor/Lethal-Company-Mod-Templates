@@ -104,47 +104,6 @@
             "description": "Publicize the Game Assemblies to access internal or private classes, fields, methods, and properties. If using Visual Studio, you must run the cmd/sh file yourself to finish installation.",
             "datatype": "bool",
             "defaultValue": "false"
-        },
-        "NuGetPackages": {
-            "type": "parameter",
-            "description": "CURRENTLY DOES NOT WORK WITH VISUAL STUDIO. Packages to reference for your mod. This will allow you to avoid manually referencing the assemblies if they have nuget packages.",
-            "datatype": "choice",
-            "enableQuotelessLiterals": true,
-            "allowMultipleValues": true,
-            "choices": [
-                {
-                    "choice": "none"
-                },
-                {
-                    "choice": "ConfigurableCompany",
-                    "description": "Reference the ConfigurableCompany package."
-                },
-                {
-                    "choice": "CSync",
-                    "description": "Reference the CSync package."
-                },
-                {
-                    "choice": "LethalLib",
-                    "description": "Reference the Lethal Lib package."
-                },
-                {
-                    "choice": "LethalNetworkAPI",
-                    "description": "Reference the LethalNetworkAPI package."
-                },
-                {
-                    "choice": "LethalSettings",
-                    "description": "Reference the LethalNetworkAPI package."
-                },
-                {
-                    "choice": "TerminalAPI",
-                    "description": "Reference the TerminalAPI package."
-                }
-            ],
-            "defaultValue": "none"
-        },
-        "HasNuGetPackage" : {
-            "type": "computed",
-            "value": "NuGetPackages == ConfigurableCompany || NuGetPackages == CSync || NuGetPackages == LethalLib || NuGetPackages == LethalNetworkAPI || NuGetPackages == LethalSettings || NuGetPackages == TerminalAPI"
         }
     },
     "sources": [
