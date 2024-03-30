@@ -15,7 +15,7 @@ namespace Harmony._ModTemplate;
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
 #if (LobbyCompatibility)
 [BepInDependency("BMX.LobbyCompatibility", BepInDependency.DependencyFlags.HardDependency)]
-[LobbyCompatibility({CompatibilityLevel}, {VersionStrictness})]
+[LobbyCompatibility(CompatibilityLevel.{CompatibilityLevel}, VersionStrictness.{VersionStrictness})]
 #endif
 public class Harmony__ModTemplate : BaseUnityPlugin
 {

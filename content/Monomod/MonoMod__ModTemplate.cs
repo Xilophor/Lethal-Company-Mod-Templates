@@ -1,7 +1,6 @@
 using BepInEx;
 using BepInEx.Logging;
 using MonoMod._ModTemplate.Patches;
-using HarmonyLib;
 #if (UseNetcodePatcher || MMHOOKLocation == "")
 using System.Reflection;
 #endif
@@ -9,11 +8,13 @@ using System.Reflection;
 using System.Collections.Generic;
 using MonoMod.RuntimeDetour;
 #endif
+using HarmonyLib;
+#if (UseNetcodePatcher)
+using UnityEngine;
+#endif
 #if (LobbyCompatibility)
 using LobbyCompatibility.Attributes;
 using LobbyCompatibility.Enums;
-#if (UseNetcodePatcher)
-using UnityEngine;
 #endif
 
 namespace MonoMod._ModTemplate;
@@ -21,7 +22,7 @@ namespace MonoMod._ModTemplate;
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
 #if (LobbyCompatibility)
 [BepInDependency("BMX.LobbyCompatibility", BepInDependency.DependencyFlags.HardDependency)]
-[LobbyCompatibility({CompatibilityLevel}, {VersionStrictness})]
+[LobbyCompatibility(CompatibilityLevel.{CompatibilityLevel}, VersionStrictness.{VersionStrictness})]
 #endif
 public class MonoMod__ModTemplate : BaseUnityPlugin
 {

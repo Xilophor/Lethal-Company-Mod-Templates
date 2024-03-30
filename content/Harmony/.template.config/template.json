@@ -91,27 +91,27 @@
             "datatype": "choice",
             "choices": [
                 {
-                    "choice": "CompatibilityLevel.ClientOnly",
-                    "description": "",
+                    "choice": "ClientOnly",
+                    "description": "Mod only impacts the client. Mod is not checked at all, VersionStrictness does not apply.",
                     "displayName": "Client Only"
                 },
                 {
-                    "choice": "CompatibilityLevel.ServerOnly",
-                    "description": "",
+                    "choice": "ServerOnly",
+                    "description": "Mod only impacts the server, and might implicitly impact the client without the client needing to have it installed for it to work. Mod is only required by the server. VersionStrictness only applies if the mod is installed on the client.",
                     "displayName": "Server Only"
                 },
                 {
-                    "choice": "CompatibilityLevel.Everyone",
-                    "description": "",
+                    "choice": "Everyone",
+                    "description": "Mod impacts both the client and the server, and adds functionality that requires the mod to be installed on both. Mod must be loaded on server and client. Version checking depends on the VersionStrictness.",
                     "displayName": "Everyone"
                 },
                 {
-                    "choice": "CompatibilityLevel.ClientOptional",
-                    "description": "",
+                    "choice": "ClientOptional",
+                    "description": "Not every client needs to have the mod installed, but if it is installed, the server also needs to have it. Generally used for mods that add extra (optional) functionality to the client if the server has it installed. Mod must be loaded on server. Version checking depends on the VersionStrictness.",
                     "displayName": "Client Optional"
                 }
             ],
-            "enableQuotelessLiterals": false,
+            "enableQuotelessLiterals": true,
             "defaultValue": "ClientOnly",
             "replaces": "{CompatibilityLevel}"
         },
@@ -121,27 +121,27 @@
             "datatype": "choice",
             "choices": [
                 {
-                    "choice": "VersionStrictness.None",
-                    "description": "",
+                    "choice": "None",
+                    "description": "No version check is done (x.x.x)",
                     "displayName": "None"
                 },
                 {
-                    "choice": "VersionStrictness.Major",
-                    "description": "",
+                    "choice": "Major",
+                    "description": "Mod must have the same Major version (1.x.x)",
                     "displayName": "Major"
                 },
                 {
-                    "choice": "VersionStrictness.Minor",
-                    "description": "",
+                    "choice": "Minor",
+                    "description": "Mods must have the same Minor and Major version (1.1.x)",
                     "displayName": "Minor"
                 },
                 {
-                    "choice": "VersionStrictness.Patch",
-                    "description": "",
+                    "choice": "Patch",
+                    "description": "Mods must have the same Patch, Minor, and Major version (1.1.1)",
                     "displayName": "Patch"
                 }
             ],
-            "enableQuotelessLiterals": false,
+            "enableQuotelessLiterals": true,
             "defaultValue": "None",
             "replaces": "{VersionStrictness}"
         },
