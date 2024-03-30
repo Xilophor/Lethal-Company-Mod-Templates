@@ -5,10 +5,18 @@ using HarmonyLib;
 using System.Reflection;
 using UnityEngine;
 #endif
+#if (LobbyCompatibility)
+using LobbyCompatibility.Attributes;
+using LobbyCompatibility.Enums;
+#endif
 
 namespace Harmony._ModTemplate;
 
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
+#if (LobbyCompatibility)
+[BepInDependency("BMX.LobbyCompatibility", BepInDependency.DependencyFlags.HardDependency)]
+[LobbyCompatibility({CompatibilityLevel}, {VersionStrictness})]
+#endif
 public class Harmony__ModTemplate : BaseUnityPlugin
 {
     public static Harmony__ModTemplate Instance { get; private set; } = null!;
