@@ -76,9 +76,27 @@
         },
         "BepInExPluginLocation": {
             "type": "parameter",
-            "description": "The file path of the plugin or profile directory to copy to for quick testing. If left blank, the mod will not be copied. Must include a trailing separator (/)",
+            "description": "The file path of the plugin or profile directory to copy to for quick testing. If left blank, the mod will not be copied.",
             "datatype": "text",
-            "defaultValue": "",
+            "defaultValue": ""
+        },
+        "BepInExPluginLocationReplacer": {
+            "type": "generated",
+            "generator": "regex",
+            "datatype": "text",
+            "parameters": {
+                "source": "BepInExPluginLocation",
+                "steps": [
+                    {
+                        "regex": "/.*[^/]$",
+                        "replacement": "$&/"
+                    },
+                    {
+                        "regex": "\\\\.*[^\\\\]$",
+                        "replacement": "$&\\"
+                    }
+                ]
+            },
             "replaces": "{PluginDirectory}"
         },
         "ReferenceGameLibsPackage": {
