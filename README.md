@@ -18,8 +18,7 @@ dotnet new update
 
 ## Usage
 
-There are two main methods of using the templates. The first is through Visual Studio, with a relatively intuitive UX.
-**Do note** that the NuGetPackage drop-down option in Visual Studio does not currently work due to an issue within Visual Studio.
+There are two main methods of using the templates. The first is through Visual Studio or Rider, with a relatively intuitive UX.
 
 For a detailed overview of terminal/commandline options, use either `lchmod --help` for the Harmony template, or `lcmmod --help` for the MonoMod template, like so:
 
