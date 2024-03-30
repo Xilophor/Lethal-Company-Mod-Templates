@@ -81,6 +81,72 @@
             "defaultValue": "1.0.0",
             "replaces": "{Version}"
         },
+        "LobbyCompatibility": {
+            "type": "parameter",
+            "description": "Whether to use lobby compatibility or not.",
+            "datatype": "bool",
+            "defaultValue": "true"
+        },
+        "CompatibilityLevel": {
+            "type": "parameter",
+            "description": "The compatibility level of the mod.",
+            "datatype": "choice",
+            "choices": [
+                {
+                    "choice": "CompatibilityLevel.ClientOnly",
+                    "description": "",
+                    "displayName": "Client Only"
+                },
+                {
+                    "choice": "CompatibilityLevel.ServerOnly",
+                    "description": "",
+                    "displayName": "Server Only"
+                },
+                {
+                    "choice": "CompatibilityLevel.Everyone",
+                    "description": "",
+                    "displayName": "Everyone"
+                },
+                {
+                    "choice": "CompatibilityLevel.ClientOptional",
+                    "description": "",
+                    "displayName": "Client Optional"
+                }
+            ],
+            "enableQuotelessLiterals": false,
+            "defaultValue": "ClientOnly",
+            "replaces": "{CompatibilityLevel}"
+        },
+        "VersionStrictness": {
+            "type": "parameter",
+            "description": "The version strictness of the mod.",
+            "datatype": "choice",
+            "choices": [
+                {
+                    "choice": "VersionStrictness.None",
+                    "description": "",
+                    "displayName": "None"
+                },
+                {
+                    "choice": "VersionStrictness.Major",
+                    "description": "",
+                    "displayName": "Major"
+                },
+                {
+                    "choice": "VersionStrictness.Minor",
+                    "description": "",
+                    "displayName": "Minor"
+                },
+                {
+                    "choice": "VersionStrictness.Patch",
+                    "description": "",
+                    "displayName": "Patch"
+                }
+            ],
+            "enableQuotelessLiterals": false,
+            "defaultValue": "None",
+            "replaces": "{VersionStrictness}"
+        },
         "BepInExPluginLocation": {
             "type": "parameter",
             "description": "The file path of the plugin or profile directory to copy to for quick testing. If left blank, the mod will not be copied. Must include a trailing separator (/)",

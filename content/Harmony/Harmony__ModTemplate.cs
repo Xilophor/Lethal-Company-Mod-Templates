@@ -1,9 +1,13 @@
-﻿using BepInEx;
+using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
 #if (UseNetcodePatcher)
 using System;
 using System.Reflection;
+#endif
+#if (LobbyCompatibility)
+using LobbyCompatibility.Attributes;
+using LobbyCompatibility.Enums;
 #endif
 
 namespace Harmony._ModTemplate;
@@ -26,6 +30,10 @@ namespace Harmony._ModTemplate;
 #endif
 #if (NuGetPackages == TerminalAPI)
 [BepInDependency("atomic.terminalapi", BepInDependency.DependencyFlags.HardDependency)]
+#endif
+#if (LobbyCompatibility)
+[BepInDependency("BMX.LobbyCompatibility", BepInDependency.DependencyFlags.HardDependency)]
+[LobbyCompatibility({CompatibilityLevel}, {VersionStrictness})]
 #endif
 public class Harmony__ModTemplate : BaseUnityPlugin
 {

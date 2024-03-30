@@ -1,4 +1,4 @@
-﻿using BepInEx;
+using BepInEx;
 using BepInEx.Logging;
 using MonoMod._ModTemplate.Patches;
 #if (UseNetcodePatcher)
@@ -10,6 +10,10 @@ using System.Reflection;
 #if (MMHOOKLocation == "")
 using System.Collections.Generic;
 using MonoMod.RuntimeDetour;
+#endif
+#if (LobbyCompatibility)
+using LobbyCompatibility.Attributes;
+using LobbyCompatibility.Enums;
 #endif
 
 namespace MonoMod._ModTemplate;
@@ -32,6 +36,10 @@ namespace MonoMod._ModTemplate;
 #endif
 #if (NuGetPackages == TerminalAPI)
 [BepInDependency("atomic.terminalapi", BepInDependency.DependencyFlags.HardDependency)]
+#endif
+#if (LobbyCompatibility)
+[BepInDependency("BMX.LobbyCompatibility", BepInDependency.DependencyFlags.HardDependency)]
+[LobbyCompatibility({CompatibilityLevel}, {VersionStrictness})]
 #endif
 public class MonoMod__ModTemplate : BaseUnityPlugin
 {

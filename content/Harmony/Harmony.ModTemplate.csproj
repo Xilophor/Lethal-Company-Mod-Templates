@@ -75,16 +75,17 @@
 <!--#endif -->
         <PackageReference Include="BepInEx.Core" Version="5.*" PrivateAssets="all"/>
         <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" PrivateAssets="all"/>
-<!--#if (ReferenceGameLibsPackage) -->
-<!--#if (PublicizeGameAssemblies) -->
+<!--#if (ReferenceGameLibsPackage && PublicizeGameAssemblies) -->
         <PackageReference Include="LethalCompany.GameLibs.Steam" Version="*-*" Publicize="true" PrivateAssets="all"/>
-<!--#else -->
+<!--#elseif (ReferenceGameLibsPackage) -->
         <PackageReference Include="LethalCompany.GameLibs.Steam" Version="*-*" PrivateAssets="all"/>
-<!--#endif -->
 <!--#endif -->
         <PackageReference Include="UnityEngine.Modules" Version="2022.3.9" IncludeAssets="compile" PrivateAssets="all"/>
 <!--#if (UseMinVer) -->
         <PackageReference Include="MinVer" Version="4.*" PrivateAssets="all"/>
+<!--#endif -->
+<!--#if (LobbyCompatibility) -->
+        <PackageReference Include="TeamBMX.LobbyCompatibility" Version="1.*" PrivateAssets="all"/>
 <!--#endif -->
     </ItemGroup>
 

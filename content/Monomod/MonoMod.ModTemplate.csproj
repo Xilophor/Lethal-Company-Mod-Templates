@@ -80,10 +80,13 @@
 <!--#elseif (ReferenceGameLibsPackage) -->
         <PackageReference Include="LethalCompany.GameLibs.Steam" Version="*-*" PrivateAssets="all"/>
 <!--#endif -->
+        <PackageReference Include="UnityEngine.Modules" Version="2022.3.9" PrivateAssets="all"/>
 <!--#if (UseMinVer) -->
         <PackageReference Include="MinVer" Version="4.*" PrivateAssets="all"/>
 <!--#endif -->
-        <PackageReference Include="UnityEngine.Modules" Version="2022.3.9" PrivateAssets="all"/>
+<!--#if (LobbyCompatibility) -->
+        <PackageReference Include="TeamBMX.LobbyCompatibility" Version="1.*" PrivateAssets="all"/>
+<!--#endif -->
     </ItemGroup>
 
 <!--/-:msbuild-conditional:noEmit -->
