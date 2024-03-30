@@ -18,35 +18,11 @@
         "classname": {
             "identifier": "safe_name"
         },
-        "guid": {
-            "identifier": "replace",
-            "pattern": "[^a-zA-Z0-9\\._\\-]+",
-            "replacement": ""
-        },
         "identity": {
             "identifier": "identity"
         }
     },
     "symbols": {
-        "ModGuid": {
-            "type": "parameter",
-            "description": "The global identifier specific to your mod. (Ex. username.ModName)",
-            "datatype": "text"
-        },
-        "ModGuidGen": {
-            "type": "generated",
-            "generator": "coalesce",
-            "parameters": {
-                "sourceVariableName": "ModGuid",
-                "fallbackVariableName": "name"
-            }
-        },
-        "ModGuidReplacer": {
-            "type": "derived",
-            "valueSource": "ModGuidGen",
-            "valueTransform": "guid",
-            "replaces": "{ModGuid}"
-        },
         "NamespaceReplacer": {
             "type": "derived",
             "valueSource": "name",
@@ -80,6 +56,35 @@
             "isEnabled": "!UseMinVer",
             "defaultValue": "1.0.0",
             "replaces": "{Version}"
+        },
+        "ModGuid": {
+            "type": "parameter",
+            "description": "The global identifier specific to your mod. (Ex. username.ModName)",
+            "datatype": "text"
+        },
+        "ModGuidGen": {
+            "type": "generated",
+            "generator": "coalesce",
+            "datatype": "text",
+            "parameters": {
+                "sourceVariableName": "ModGuid",
+                "fallbackVariableName": "name"
+            }
+        },
+        "ModGuidReplacer": {
+            "type": "generated",
+            "generator": "regex",
+            "datatype": "text",
+            "parameters": {
+                "source": "ModGuidGen",
+                "steps": [
+                    {
+                        "regex": "[^a-zA-Z0-9\\._\\-]+",
+                        "replacement": ""
+                    }
+                ]
+            },
+            "replaces": "{ModGuid}"
         },
         "BepInExPluginLocation": {
             "type": "parameter",

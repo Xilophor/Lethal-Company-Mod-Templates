@@ -18,11 +18,6 @@
         "classname": {
             "identifier": "safe_name"
         },
-        "guid": {
-            "identifier": "replace",
-            "pattern": "[^a-zA-Z0-9\\._\\-]+",
-            "replacement": ""
-        },
         "identity": {
             "identifier": "identity"
         }
@@ -36,15 +31,25 @@
         "ModGuidGen": {
             "type": "generated",
             "generator": "coalesce",
+            "datatype": "text",
             "parameters": {
                 "sourceVariableName": "ModGuid",
                 "fallbackVariableName": "name"
             }
         },
         "ModGuidReplacer": {
-            "type": "derived",
-            "valueSource": "ModGuidGen",
-            "valueTransform": "guid",
+            "type": "generated",
+            "generator": "regex",
+            "datatype": "text",
+            "parameters": {
+                "source": "ModGuidGen",
+                "steps": [
+                    {
+                        "regex": "[^a-zA-Z0-9\\._\\-]+",
+                        "replacement": ""
+                    }
+                ]
+            },
             "replaces": "{ModGuid}"
         },
         "NamespaceReplacer": {
