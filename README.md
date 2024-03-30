@@ -26,8 +26,3 @@ For a detailed overview of terminal/commandline options, use either `lchmod --he
 dotnet new lchmod --help
 dotnet new lcmmod --help
 ```
-
-## Contributing
-
-If you've made a library or API that you've posted onto [NuGet](https://nuget.org/) and want it in this template,
-either make a PR adding it, or create an Issue requesting it, with the NuGet posting link and the mod's GUID.
