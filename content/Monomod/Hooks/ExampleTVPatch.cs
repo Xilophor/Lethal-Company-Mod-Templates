@@ -2,7 +2,7 @@
 using System;
 
 #endif
-namespace MonoMod._ModTemplate.Patches;
+namespace MonoMod._ModTemplate.Hooks;
 
 public class ExampleTVPatch
 {
